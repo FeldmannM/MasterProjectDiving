@@ -1,0 +1,13 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/DivingTest.unity
+    guid: 44b534dd6f85b394babb0dc6871dc968
+  m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: d5319671b3f5dff48853145bf049451f, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a33f74cc8ddd0d345a2ec627343c5a78, type: 2}
