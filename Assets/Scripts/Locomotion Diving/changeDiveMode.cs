@@ -15,6 +15,9 @@ public class changeDiveMode : MonoBehaviour
     private List<MonoBehaviour> scripts;
     private int currentIndex = 0;
 
+    private List<float> rotations = new List<float> { 0f, 90f, 180f, 270f };
+    private int rotIndex = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -27,21 +30,9 @@ public class changeDiveMode : MonoBehaviour
     {
         if (rightP.action.WasPerformedThisFrame())
         {
-            Quaternion currentRot = locomotionBase.transform.rotation;
-            float newRotX = 0f;
-            if(currentRot.eulerAngles.x == 0f)
-            {
-                newRotX = 270f;
-            }
-            else if (currentRot.eulerAngles.x == 270f)
-            {
-                newRotX = 180f;
-            }
-            else if (currentRot.eulerAngles.x == 180f)
-            {
-                newRotX = 0f;
-            }
-            Quaternion newRot = Quaternion.Euler(newRotX, 90f, 0f);
+            rotIndex = (rotIndex + 1) % 4;
+            float newRotX = rotations[rotIndex];
+            Quaternion newRot = Quaternion.Euler(newRotX, 0f, 0f);
             locomotionBase.transform.rotation = newRot;
         }
         if (rightS.action.WasPerformedThisFrame())

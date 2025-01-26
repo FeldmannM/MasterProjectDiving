@@ -35,7 +35,7 @@ public class tugToDive : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         if (leftConPos != null && rightConPos != null)
         {
@@ -50,7 +50,7 @@ public class tugToDive : MonoBehaviour
             {
                 initalRightConPos = locomotion.transform.TransformPoint(rightConPos.action.ReadValue<Vector3>());
             }
-            
+
             if (leftGrip.action.WasReleasedThisFrame())
             {
                 initalRightConPos = locomotion.transform.TransformPoint(rightConPos.action.ReadValue<Vector3>());
@@ -59,7 +59,7 @@ public class tugToDive : MonoBehaviour
             {
                 initalLeftConPos = locomotion.transform.TransformPoint(leftConPos.action.ReadValue<Vector3>());
             }
-            
+
             if (leftGrip.action.IsPressed() && rightGrip.action.IsPressed())
             {
                 Vector3 averageDir = (initalLeftConPos - currentLeftConPos + initalRightConPos - currentRightConPos) / 2;
@@ -75,7 +75,7 @@ public class tugToDive : MonoBehaviour
                 Vector3 rightDir = initalRightConPos - currentRightConPos;
                 locomotion.transform.position += rightDir;
             }
-            
+            vibration.activeVib = false;
         }
     }
 }
