@@ -259,7 +259,8 @@ public class Test : MonoBehaviour
         double datapoint = (((data[1] / (Math.Pow(2, 16) - 1.0)) - 0.5) * 3.0);
         //Debug.Log(datapoint);
         datapoint += 1;
-        transform.localScale = Vector3.one * (float)datapoint;
+        //transform.localScale = Vector3.one * (float)datapoint;
+        transform.GetComponent<useSensor>().sensorValue = (float)datapoint;
     }
 
     // Callback that receives the events raised from the PLUX devices that are streaming real-time data.

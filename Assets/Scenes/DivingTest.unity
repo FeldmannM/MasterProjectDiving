@@ -1094,6 +1094,9 @@ GameObject:
   - component: {fileID: 791931952}
   - component: {fileID: 791931951}
   - component: {fileID: 791931950}
+  - component: {fileID: 791931954}
+  - component: {fileID: 791931953}
+  - component: {fileID: 791931955}
   m_Layer: 0
   m_Name: Breathe
   m_TagString: Untagged
@@ -1108,7 +1111,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 791931949}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d50ada4c97b18040aa33cd053396fe8, type: 3}
   m_Name: 
@@ -1124,7 +1127,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 791931949}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c46b1e59d9b20b48b3199386a0a64b5, type: 3}
   m_Name: 
@@ -1145,6 +1148,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &791931953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 791931949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1650d7b525fa11e4d81ac23428e3fa88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensorValue: 0
+  changeThreshold: 0.015
+  stagnationThreshold: 0.001
+--- !u!114 &791931954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 791931949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d126753102ae9dd44b7e3cd68ce16d52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  samplingRate: 100
+--- !u!114 &791931955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 791931949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5306a200649cc84e96a2cec7723dad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sValue: 0
+  particles: {fileID: 1956926871}
+  audioS: {fileID: 169289997}
+  freqTime: 2.5
 --- !u!1 &957355598
 GameObject:
   m_ObjectHideFlags: 0
@@ -1603,7 +1650,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1569827575}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d126753102ae9dd44b7e3cd68ce16d52, type: 3}
   m_Name: 
