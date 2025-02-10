@@ -56,6 +56,14 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: -1975554341894653356, guid: 8ca52a65e80e81040bbb152646dc66c2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01dc57b2212fa7b42a3e1de29bb7eb51, type: 2}
+    - target: {fileID: -1099003303664417327, guid: 8ca52a65e80e81040bbb152646dc66c2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01dc57b2212fa7b42a3e1de29bb7eb51, type: 2}
     - target: {fileID: 919132149155446097, guid: 8ca52a65e80e81040bbb152646dc66c2, type: 3}
       propertyPath: m_Name
       value: coralYellow
@@ -76,6 +84,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 3709316560507799349, guid: 8ca52a65e80e81040bbb152646dc66c2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01dc57b2212fa7b42a3e1de29bb7eb51, type: 2}
     - target: {fileID: 4742473837712756890, guid: 8ca52a65e80e81040bbb152646dc66c2, type: 3}
       propertyPath: m_LODs.Array.data[0].screenRelativeHeight
       value: 0.5
@@ -86,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4742473837712756890, guid: 8ca52a65e80e81040bbb152646dc66c2, type: 3}
       propertyPath: m_LODs.Array.data[2].screenRelativeHeight
-      value: 0.001
+      value: 0.005
       objectReference: {fileID: 0}
     - target: {fileID: 7308746658456393371, guid: 8ca52a65e80e81040bbb152646dc66c2, type: 3}
       propertyPath: m_Layer
