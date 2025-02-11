@@ -177,6 +177,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goal(Medium) (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1743706915564766067, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.002
+      objectReference: {fileID: 0}
     - target: {fileID: 7363801974566740473, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6
@@ -355,6 +359,10 @@ PrefabInstance:
     - target: {fileID: 838433432085505281, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
       propertyPath: m_Name
       value: Goal(Medium) (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1743706915564766067, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.002
       objectReference: {fileID: 0}
     - target: {fileID: 7363801974566740473, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
       propertyPath: m_LocalScale.x
@@ -979,6 +987,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goal(Small) (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5811787597901442915, guid: 3109f10966d62ff4a8467a79e73e9366, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.002
+      objectReference: {fileID: 0}
     - target: {fileID: 8298990770067379827, guid: 3109f10966d62ff4a8467a79e73e9366, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6
@@ -1242,6 +1254,10 @@ PrefabInstance:
     - target: {fileID: 838433432085505281, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
       propertyPath: m_Name
       value: Goal(Medium) (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1743706915564766067, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.002
       objectReference: {fileID: 0}
     - target: {fileID: 7363801974566740473, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
       propertyPath: m_LocalScale.x
@@ -1617,6 +1633,10 @@ PrefabInstance:
     - target: {fileID: 838433432085505281, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
       propertyPath: m_Name
       value: Goal(Medium) (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1743706915564766067, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.002
       objectReference: {fileID: 0}
     - target: {fileID: 7363801974566740473, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
       propertyPath: m_LocalScale.x
@@ -2476,6 +2496,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goal(Small) (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5811787597901442915, guid: 3109f10966d62ff4a8467a79e73e9366, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.002
+      objectReference: {fileID: 0}
     - target: {fileID: 8298990770067379827, guid: 3109f10966d62ff4a8467a79e73e9366, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6
@@ -2649,6 +2673,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goal(Medium) (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1743706915564766067, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.002
+      objectReference: {fileID: 0}
     - target: {fileID: 7363801974566740473, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6
@@ -2722,6 +2750,10 @@ PrefabInstance:
     - target: {fileID: 838433432085505281, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
       propertyPath: m_Name
       value: Goal(Medium) (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1743706915564766067, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.002
       objectReference: {fileID: 0}
     - target: {fileID: 7363801974566740473, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
       propertyPath: m_LocalScale.x
@@ -2797,6 +2829,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goal(Small) (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 5811787597901442915, guid: 3109f10966d62ff4a8467a79e73e9366, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.002
+      objectReference: {fileID: 0}
     - target: {fileID: 8298990770067379827, guid: 3109f10966d62ff4a8467a79e73e9366, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6
@@ -2870,6 +2906,10 @@ PrefabInstance:
     - target: {fileID: 2754793763572881465, guid: bd58f53517d145e45a16799eaa7aa74b, type: 3}
       propertyPath: m_Name
       value: Goal(Big) (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3773819331641275080, guid: bd58f53517d145e45a16799eaa7aa74b, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.002
       objectReference: {fileID: 0}
     - target: {fileID: 3899689599380303922, guid: bd58f53517d145e45a16799eaa7aa74b, type: 3}
       propertyPath: m_LocalScale.x
@@ -3173,6 +3213,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goal(Big) (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3773819331641275080, guid: bd58f53517d145e45a16799eaa7aa74b, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.002
+      objectReference: {fileID: 0}
     - target: {fileID: 3899689599380303922, guid: bd58f53517d145e45a16799eaa7aa74b, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6
@@ -3328,6 +3372,10 @@ PrefabInstance:
     - target: {fileID: 1735920924643553825, guid: 3109f10966d62ff4a8467a79e73e9366, type: 3}
       propertyPath: m_Name
       value: Goal(Small) (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5811787597901442915, guid: 3109f10966d62ff4a8467a79e73e9366, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.002
       objectReference: {fileID: 0}
     - target: {fileID: 8298990770067379827, guid: 3109f10966d62ff4a8467a79e73e9366, type: 3}
       propertyPath: m_LocalScale.x
@@ -4115,6 +4163,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goal(Big) (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 3773819331641275080, guid: bd58f53517d145e45a16799eaa7aa74b, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.002
+      objectReference: {fileID: 0}
     - target: {fileID: 3899689599380303922, guid: bd58f53517d145e45a16799eaa7aa74b, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6
@@ -4830,6 +4882,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goal(Medium) (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1743706915564766067, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.002
+      objectReference: {fileID: 0}
     - target: {fileID: 7363801974566740473, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6
@@ -4903,12 +4959,13 @@ GameObject:
   - component: {fileID: 1909671296}
   - component: {fileID: 1909671301}
   - component: {fileID: 1909671298}
-  - component: {fileID: 1909671300}
-  - component: {fileID: 1909671299}
+  - component: {fileID: 1909671306}
   - component: {fileID: 1909671302}
   - component: {fileID: 1909671303}
-  - component: {fileID: 1909671304}
+  - component: {fileID: 1909671299}
   - component: {fileID: 1909671305}
+  - component: {fileID: 1909671304}
+  - component: {fileID: 1909671300}
   m_Layer: 0
   m_Name: Locomotion
   m_TagString: Untagged
@@ -4954,7 +5011,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1909671295}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c84e27d8f99c1f42ac25db77576f4ac, type: 3}
   m_Name: 
@@ -4964,7 +5021,7 @@ MonoBehaviour:
   maxSpeed: 1.5
   acceleration: 5
   deceleration: 0.75
-  movementThreshold: 0.001
+  movementThreshold: 0.004
   leftConPos: {fileID: -2024308242397127297, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightConPos: {fileID: -3326005586356538449, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!114 &1909671300
@@ -4980,7 +5037,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locomotion: {fileID: 1909671295}
-  mainCamera: {fileID: 0}
+  mainCamera: {fileID: 9014170784976475920}
   leftConPos: {fileID: -2024308242397127297, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightConPos: {fileID: -3326005586356538449, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   leftGrip:
@@ -5045,10 +5102,10 @@ MonoBehaviour:
     m_Reference: {fileID: -3738858423908444582, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   locomotionBase: {fileID: 1909671295}
   scripts:
-  - {fileID: 1909671299}
+  - {fileID: 1909671306}
   - {fileID: 1909671302}
   - {fileID: 1909671303}
-  - {fileID: 1909671304}
+  - {fileID: 1909671299}
   - {fileID: 1909671305}
 --- !u!114 &1909671302
 MonoBehaviour:
@@ -5143,6 +5200,26 @@ MonoBehaviour:
   turnFactorAc: 50
   turnFactorDec: 5
   turnThreshold: 0.01
+  leftConPos: {fileID: -2024308242397127297, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  rightConPos: {fileID: -3326005586356538449, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+--- !u!114 &1909671306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909671295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68722d30619f19c42b3551c32c39d4b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locomotion: {fileID: 1909671295}
+  mainCamera: {fileID: 9014170784976475920}
+  maxSpeed: 1.5
+  acceleration: 5
+  deceleration: 0.75
+  movementThreshold: 0.001
   leftConPos: {fileID: -2024308242397127297, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightConPos: {fileID: -3326005586356538449, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!1 &1922383572
@@ -10344,6 +10421,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goal(Big) (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3773819331641275080, guid: bd58f53517d145e45a16799eaa7aa74b, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.002
+      objectReference: {fileID: 0}
     - target: {fileID: 3899689599380303922, guid: bd58f53517d145e45a16799eaa7aa74b, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6
@@ -11778,6 +11859,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goal(Medium)
       objectReference: {fileID: 0}
+    - target: {fileID: 1743706915564766067, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.002
+      objectReference: {fileID: 0}
     - target: {fileID: 7363801974566740473, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6
@@ -12409,6 +12494,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goal(Small)
       objectReference: {fileID: 0}
+    - target: {fileID: 5811787597901442915, guid: 3109f10966d62ff4a8467a79e73e9366, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.002
+      objectReference: {fileID: 0}
     - target: {fileID: 8298990770067379827, guid: 3109f10966d62ff4a8467a79e73e9366, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6
@@ -12642,6 +12731,10 @@ PrefabInstance:
     - target: {fileID: 2754793763572881465, guid: bd58f53517d145e45a16799eaa7aa74b, type: 3}
       propertyPath: m_Name
       value: Goal(Big)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3773819331641275080, guid: bd58f53517d145e45a16799eaa7aa74b, type: 3}
+      propertyPath: m_LODs.Array.data[2].screenRelativeHeight
+      value: 0.002
       objectReference: {fileID: 0}
     - target: {fileID: 3899689599380303922, guid: bd58f53517d145e45a16799eaa7aa74b, type: 3}
       propertyPath: m_LocalScale.x
