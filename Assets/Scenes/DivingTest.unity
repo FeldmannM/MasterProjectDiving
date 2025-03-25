@@ -243,6 +243,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7363801974566740473, guid: 07c3f0523b1a7ba489b3b99224f321e1, type: 3}
   m_PrefabInstance: {fileID: 41124803}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &78744187
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 78744188}
+  m_Layer: 7
+  m_Name: NeckAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &78744188
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78744187}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9014170784976475925}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &105121330
 GameObject:
   m_ObjectHideFlags: 0
@@ -836,6 +867,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 218337661}
+  - component: {fileID: 218337663}
   - component: {fileID: 218337662}
   m_Layer: 0
   m_Name: RotationAmplifierGO
@@ -879,6 +911,31 @@ MonoBehaviour:
   mainCamera: {fileID: 9014170784976475920}
   cameraParent: {fileID: 218337660}
   amplifier: 0.25
+--- !u!114 &218337663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218337660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f92ad823ce255ca448abb810668c7de9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraParent: {fileID: 218337660}
+  leftSelect:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Left Select
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: a58b55cc-4ce7-4105-826d-8eb875b062e3
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!1 &224800741
 GameObject:
   m_ObjectHideFlags: 0
@@ -5329,7 +5386,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locomotion: {fileID: 1909671295}
-  mainCamera: {fileID: 9014170784976475920}
+  neckAnchor: {fileID: 78744187}
   maxSpeed: 1.5
   acceleration: 0.5
   deceleration: 1
@@ -5351,7 +5408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locomotion: {fileID: 1909671295}
-  mainCamera: {fileID: 9014170784976475920}
+  neckAnchor: {fileID: 78744187}
   maxSpeed: 1.5
   acceleration: 5
   deceleration: 0.75
@@ -12715,7 +12772,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7640130200348223346
 Transform:
   m_ObjectHideFlags: 0
@@ -13664,6 +13721,7 @@ Transform:
   - {fileID: 1984510292}
   - {fileID: 136565536}
   - {fileID: 1435450254}
+  - {fileID: 78744188}
   m_Father: {fileID: 218337661}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9014170784976475926

@@ -35,8 +35,8 @@ public class divingWithFeetCamDir : MonoBehaviour
     {
         if (leftConPos != null && rightConPos != null)
         {
-            lastLeftConPos = leftConPos.action.ReadValue<Vector3>();
-            lastRightConPos = rightConPos.action.ReadValue<Vector3>();
+            lastLeftConPos = locomotion.transform.rotation * leftConPos.action.ReadValue<Vector3>();
+            lastRightConPos = locomotion.transform.rotation * rightConPos.action.ReadValue<Vector3>();
             vibration = locomotion.GetComponent<Vibration>();
         }
     }
@@ -46,8 +46,8 @@ public class divingWithFeetCamDir : MonoBehaviour
     {
         if (leftConPos != null && rightConPos != null)
         {
-            currentLeftConPos = leftConPos.action.ReadValue<Vector3>();
-            currentRightConPos = rightConPos.action.ReadValue<Vector3>();
+            currentLeftConPos = locomotion.transform.rotation * leftConPos.action.ReadValue<Vector3>();
+            currentRightConPos = locomotion.transform.rotation * rightConPos.action.ReadValue<Vector3>();
 
             if (currentLeftConPos.y < lastLeftConPos.y - movementThreshold || currentRightConPos.y < lastRightConPos.y - movementThreshold)
             {

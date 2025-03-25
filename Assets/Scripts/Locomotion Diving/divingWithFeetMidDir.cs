@@ -8,7 +8,7 @@ public class divingWithFeetMidDir : MonoBehaviour
     [SerializeField]
     private GameObject locomotion;
     [SerializeField]
-    private Camera mainCamera;
+    private GameObject neckAnchor;
     [SerializeField]
     private float maxSpeed = 1.5f;
     [SerializeField]
@@ -39,8 +39,8 @@ public class divingWithFeetMidDir : MonoBehaviour
     {
         if (leftConPos != null && rightConPos != null)
         {
-            lastLeftConPos = leftConPos.action.ReadValue<Vector3>();
-            lastRightConPos = rightConPos.action.ReadValue<Vector3>();
+            lastLeftConPos = locomotion.transform.rotation * leftConPos.action.ReadValue<Vector3>();
+            lastRightConPos = locomotion.transform.rotation * rightConPos.action.ReadValue<Vector3>();
             vibration = locomotion.GetComponent<Vibration>();
         }
     }
@@ -50,11 +50,11 @@ public class divingWithFeetMidDir : MonoBehaviour
     {
         if (leftConPos != null && rightConPos != null)
         {
-            currentLeftConPos = leftConPos.action.ReadValue<Vector3>();
-            currentRightConPos = rightConPos.action.ReadValue<Vector3>();
+            currentLeftConPos = locomotion.transform.rotation * leftConPos.action.ReadValue<Vector3>();
+            currentRightConPos = locomotion.transform.rotation * rightConPos.action.ReadValue<Vector3>();
 
             Vector3 midCons = (lCon.transform.position + rCon.transform.position) / 2;
-            Vector3 underCam = mainCamera.transform.position - new Vector3(0f, 0.2f, 0f);
+            Vector3 underCam = neckAnchor.transform.position;
             Vector3 middleDirection = midCons - underCam;
             //middleDirection.y = 0f;
             middleDirection = middleDirection.normalized;

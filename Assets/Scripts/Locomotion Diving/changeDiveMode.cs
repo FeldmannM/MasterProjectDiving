@@ -15,7 +15,8 @@ public class changeDiveMode : MonoBehaviour
     private List<MonoBehaviour> scripts;
     private int currentIndex = 0;
 
-    private List<float> rotations = new List<float> { 0f, 90f, 180f, 270f };
+    //private List<float> rotations = new List<float> { 0f, 90f, 180f, 270f };
+    private List<float> rotations = new List<float> { 0f, 90f };
     private int rotIndex = 0;
 
 
@@ -30,7 +31,7 @@ public class changeDiveMode : MonoBehaviour
     {
         if (rightP.action.WasPerformedThisFrame())
         {
-            rotIndex = (rotIndex + 1) % 4;
+            rotIndex = (rotIndex + 1) % rotations.Count;
             float newRotX = rotations[rotIndex];
             Quaternion newRot = Quaternion.Euler(newRotX, 0f, 0f);
             locomotionBase.transform.rotation = newRot;
