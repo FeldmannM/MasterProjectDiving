@@ -5,25 +5,51 @@ using UnityEngine;
 public class RotationAmplifier : MonoBehaviour
 {
     [SerializeField]
+    private GameObject rotationAnchor;
+    [SerializeField]
     private Camera mainCamera;
-    [SerializeField]
-    private GameObject cameraParent;
-    [SerializeField]
-    private float amplifier = 1.0f;
+    [SerializeField, Range(1.0f, 2.0f)]
+    private float rotAmplifier = 1.5f;
 
-    // Update is called once per frame
-    void Update()
+    private Quaternion initCamRot;
+    private Quaternion initRARot;
+
+    // Start is called before the first frame update
+    void Start()
     {
-        Quaternion camRot = mainCamera.transform.localRotation;
-        Vector3 camEA = camRot.eulerAngles;
-        //Debug.Log("CAM_EA:" + camEA);
-        Vector3 correctedEA = new Vector3(
-            camEA.x > 180 ? camEA.x - 360 : camEA.x,
-            camEA.y > 180 ? camEA.y - 360 : camEA.y,
-            camEA.z > 180 ? camEA.z - 360 : camEA.z
+        initCamRot = mainCamera.transform.localRotation;
+        initRARot = rotationAnchor.transform.localRotation;
+    }
+
+    // waiting for tracking
+    void LateUpdate()
+    {
+        Quaternion currentCamRot = mainCamera.transform.localRotation;
+        Quaternion deltaRot = Quaternion.Inverse(initCamRot) * currentCamRot;
+        Quaternion amplifiedDeltaRot = QuaternionMult(deltaRot, rotAmplifier - 1f);
+        Quaternion virtualCamRot = initCamRot * amplifiedDeltaRot;
+        //Quaternion diffRot = Quaternion.Inverse(currentCamRot) * virtualCamRot;
+        //rotationAnchor.transform.localRotation = initRARot * diffRot;
+        rotationAnchor.transform.localRotation = initRARot * amplifiedDeltaRot;
+
+        Debug.Log("Real Rotation: " + currentCamRot.eulerAngles);
+        Debug.Log("Virtual Rotation: " + virtualCamRot.eulerAngles);
+        //Debug.Log("RotationAnchor Adjustment: " + diffRot.eulerAngles);
+    }
+
+    // mit Quaternion rechnen da EulerAngles 
+    private Quaternion QuaternionMult(Quaternion rot, float amplifier)
+    {
+        // Quaternion zerlegen
+        float angle = Mathf.Acos(rot.w) * 2.0f;
+        Vector3 axis = new Vector3(rot.x, rot.y, rot.z).normalized;
+        float amplifiedAngle = amplifier * angle;
+        Quaternion amplifiedQuaternion = new Quaternion(
+            axis.x * Mathf.Sin(amplifiedAngle / 2.0f),
+            axis.y * Mathf.Sin(amplifiedAngle / 2.0f),
+            axis.z * Mathf.Sin(amplifiedAngle / 2.0f),
+            Mathf.Cos(amplifiedAngle / 2.0f)
         );
-        Vector3 ampliefiedEA = amplifier * correctedEA;
-        //Debug.Log("AMP_EA:" + ampliefiedEA);
-        cameraParent.transform.localRotation = Quaternion.Euler(ampliefiedEA);
+        return amplifiedQuaternion;
     }
 }
