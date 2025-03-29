@@ -9,6 +9,9 @@ public class useSensor : MonoBehaviour
     private float changeThreshold = 0.015f;
     [SerializeField]
     private float stagnationThreshold = 0.001f;
+    [SerializeField, Range(0.0f, 1f)]
+    private float filterValue = 0.1f;
+
 
     private float previousValue;
     private bool wasInc = false;
@@ -23,6 +26,9 @@ public class useSensor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Bewegungsfilter anwenden
+        sensorValue = sensorValue * filterValue + previousValue * (1 - filterValue);
+
         // Berechnung der Änderung
         float deltaValue = sensorValue - previousValue;
         float deltaTime = Time.deltaTime;
