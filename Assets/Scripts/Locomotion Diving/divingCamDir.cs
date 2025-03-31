@@ -69,7 +69,7 @@ public class divingCamDir : MonoBehaviour
 			
             lastLeftConPos = currentLeftConPos;
             lastRightConPos = currentRightConPos;
-            Debug.Log(currentSpeed);
+            //Debug.Log(currentSpeed);
 
             float bIntensity = Mathf.Abs((currentSpeed / maxSpeed) * 0.25f);
             if (bIntensity > 0.025f)

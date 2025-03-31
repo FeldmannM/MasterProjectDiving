@@ -6,16 +6,21 @@ public class useSensor : MonoBehaviour
 {
     public float sensorValue;
     [SerializeField]
-    private float changeThreshold = 0.015f;
+    private float changeThreshold = 0.0125f;
     [SerializeField]
     private float stagnationThreshold = 0.001f;
+    [SerializeField]
+    private float filterThreshold = 0.005f;
     [SerializeField, Range(0.0f, 1f)]
-    private float filterValue = 0.1f;
+    private float filterValue = 0.75f;
 
 
     private float previousValue;
     private bool wasInc = false;
     private bool isMonitoringDecrease = false;
+
+    //voraussichtliche maximale Abweichung der Werte
+    private float maxDiff = 0.25f;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +32,7 @@ public class useSensor : MonoBehaviour
     void Update()
     {
         // Bewegungsfilter anwenden
-        sensorValue = sensorValue * filterValue + previousValue * (1 - filterValue);
+        sensorValue = MovementFilter(sensorValue);
 
         // Berechnung der Änderung
         float deltaValue = sensorValue - previousValue;
@@ -72,7 +77,7 @@ public class useSensor : MonoBehaviour
                 // Kontinuierliche Ausgabe des Abfalls
                 Debug.Log("Variable fällt um: " + (-deltaValue));
                 // weitergeben an die Partikelmechanik
-                transform.GetComponent<sensorParticles>().sValue = -deltaValue * 100;
+                transform.GetComponent<sensorParticles>().sValue = -deltaValue * 75;
 
                 // Überprüfung auf Stagnation
                 if (Mathf.Abs(rateOfChange) < stagnationThreshold)
@@ -107,5 +112,21 @@ public class useSensor : MonoBehaviour
     {
         wasInc = false;
         isMonitoringDecrease = false;
+    }
+
+    // dynamischer Filter um Schwankungen auszugleichen
+    private float MovementFilter(float value)
+    {
+        float diff = Mathf.Abs(value - previousValue);
+        if (diff > maxDiff)
+        {
+            maxDiff = diff;
+        }
+        float dynamicFilter = Mathf.Clamp((1f - (diff / maxDiff)) * filterValue, 0.001f, 1f);
+        if (diff > filterThreshold)
+        {
+            value = value * dynamicFilter + previousValue * (1 - dynamicFilter);
+        }
+        return value;
     }
 }
