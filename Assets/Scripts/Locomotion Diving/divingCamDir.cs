@@ -21,6 +21,10 @@ public class divingCamDir : MonoBehaviour
     private InputActionReference leftConPos;
     [SerializeField]
     private InputActionReference rightConPos;
+    [SerializeField]
+    private InputActionProperty leftGrab;
+    [SerializeField]
+    private InputActionProperty rightGrab;
 
     private Vibration vibration;
 
@@ -49,7 +53,7 @@ public class divingCamDir : MonoBehaviour
             currentLeftConPos = locomotion.transform.rotation * leftConPos.action.ReadValue<Vector3>();
             currentRightConPos = locomotion.transform.rotation * rightConPos.action.ReadValue<Vector3>();
 
-            if(currentLeftConPos.z < lastLeftConPos.z - movementThreshold && currentRightConPos.z < lastRightConPos.z - movementThreshold)
+            if(currentLeftConPos.z < lastLeftConPos.z - movementThreshold && currentRightConPos.z < lastRightConPos.z - movementThreshold && rightGrab.action.IsPressed() && leftGrab.action.IsPressed())
             {
 				currentSpeed += acceleration * Time.deltaTime;
 				currentSpeed = Mathf.Clamp(currentSpeed, 0f, maxSpeed);

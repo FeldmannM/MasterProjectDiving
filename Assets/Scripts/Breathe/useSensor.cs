@@ -14,13 +14,15 @@ public class useSensor : MonoBehaviour
     [SerializeField, Range(0.0f, 1f)]
     private float filterValue = 0.75f;
 
-
     private float previousValue;
     private bool wasInc = false;
     private bool isMonitoringDecrease = false;
 
     //voraussichtliche maximale Abweichung der Werte
     private float maxDiff = 0.25f;
+
+    private List<float> lastValues = new List<float>();
+    private int maxCount = 20;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +35,8 @@ public class useSensor : MonoBehaviour
     {
         // Bewegungsfilter anwenden
         sensorValue = MovementFilter(sensorValue);
+        // Durschnittsflter anwenden
+        //sensorValue = AverageFilter(sensorValue);
 
         // Berechnung der Änderung
         float deltaValue = sensorValue - previousValue;
@@ -128,5 +132,21 @@ public class useSensor : MonoBehaviour
             value = value * dynamicFilter + previousValue * (1 - dynamicFilter);
         }
         return value;
+    }
+
+    private float AverageFilter(float value)
+    {
+        lastValues.Add(value);
+        if(lastValues.Count > maxCount)
+        {
+            lastValues.RemoveAt(0);
+        }
+        float averageValue = 0f;
+        foreach (float lV in lastValues)
+        {
+            averageValue += lV;
+        }
+        averageValue = averageValue / lastValues.Count;
+        return averageValue;
     }
 }

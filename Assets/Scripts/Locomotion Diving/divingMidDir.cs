@@ -25,6 +25,10 @@ public class divingMidDir : MonoBehaviour
     private GameObject lCon;
     [SerializeField]
     private GameObject rCon;
+    [SerializeField]
+    private InputActionProperty leftGrab;
+    [SerializeField]
+    private InputActionProperty rightGrab;
 
     private Vibration vibration;
 
@@ -62,8 +66,9 @@ public class divingMidDir : MonoBehaviour
             Debug.DrawLine(underCam, midCons, Color.red, 0.2f);
             Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
 
-            if ((currentLeftConPos.z < lastLeftConPos.z - movementThreshold && currentRightConPos.z < lastRightConPos.z - movementThreshold)
+            if (((currentLeftConPos.z < lastLeftConPos.z - movementThreshold && currentRightConPos.z < lastRightConPos.z - movementThreshold)
                 || (currentLeftConPos.x < lastLeftConPos.x - movementThreshold && currentRightConPos.x < lastRightConPos.x - movementThreshold))
+                && rightGrab.action.IsPressed() && leftGrab.action.IsPressed())
             {
                 currentSpeed += acceleration * Time.deltaTime;
                 currentSpeed = Mathf.Clamp(currentSpeed, 0f, maxSpeed);
