@@ -13,6 +13,14 @@ public class changeDiveMode : MonoBehaviour
     private GameObject locomotionBase;
     [SerializeField]
     private List<MonoBehaviour> scripts;
+    [SerializeField]
+    private GameObject HandL;
+    [SerializeField]
+    private GameObject HandR;
+    [SerializeField]
+    private GameObject DivingFinL;
+    [SerializeField]
+    private GameObject DivingFinR;
     private int currentIndex = 0;
 
     //private List<float> rotations = new List<float> { 0f, 90f, 180f, 270f };
@@ -41,6 +49,20 @@ public class changeDiveMode : MonoBehaviour
             scripts[currentIndex].enabled = false;
             currentIndex = (currentIndex + 1) % scripts.Count;
             scripts[currentIndex].enabled = true;
+            if(currentIndex == 0 || currentIndex == 1)
+            {
+                HandL.SetActive(true);
+                HandR.SetActive(true);
+                DivingFinL.SetActive(false);
+                DivingFinR.SetActive(false);
+            }
+            else
+            {
+                HandL.SetActive(false);
+                HandR.SetActive(false);
+                DivingFinL.SetActive(true);
+                DivingFinR.SetActive(true);
+            }
         }
     }
 }
