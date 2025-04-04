@@ -894,7 +894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 200209871}
-  sensor: {fileID: 791931953}
+  sensor: {fileID: 791931956}
   maxSize: 1000
   graphWidth: 5
   xpos: -2.5
@@ -2770,6 +2770,7 @@ GameObject:
   - component: {fileID: 791931951}
   - component: {fileID: 791931950}
   - component: {fileID: 791931954}
+  - component: {fileID: 791931956}
   - component: {fileID: 791931953}
   - component: {fileID: 791931955}
   m_Layer: 0
@@ -2869,6 +2870,25 @@ MonoBehaviour:
   particles: {fileID: 1956926871}
   audioS: {fileID: 169289997}
   freqTime: 2.5
+--- !u!114 &791931956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 791931949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d460385d50d4263449d91f7c22f7b4fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensorValue: 0
+  stagnationThreshold: 0.001
+  filterThreshold: 0.005
+  filterValue: 0.75
+  percentThreshold: 0.8
+  maxCount: 20
+  lastValues: []
 --- !u!1001 &797620727
 PrefabInstance:
   m_ObjectHideFlags: 0
