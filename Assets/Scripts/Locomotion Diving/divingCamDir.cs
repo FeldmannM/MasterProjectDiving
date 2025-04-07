@@ -9,6 +9,8 @@ public class divingCamDir : MonoBehaviour
     private GameObject locomotion;
     [SerializeField]
     private Camera mainCamera;
+    [SerializeField]
+    private GameObject refPoint;
 	[SerializeField]
     private float maxSpeed = 1.5f;
 	[SerializeField]
@@ -17,6 +19,10 @@ public class divingCamDir : MonoBehaviour
 	private float deceleration = 0.75f;
     [SerializeField]
     private float movementThreshold = 0.001f;
+    [SerializeField]
+    private float separationFactor = 0.2f;
+    [SerializeField]
+    private int posListLimit = 50;
     [SerializeField]
     private InputActionReference leftConPos;
     [SerializeField]
@@ -34,13 +40,33 @@ public class divingCamDir : MonoBehaviour
     private Vector3 currentRightConPos;
 	private float currentSpeed;
 
+    [SerializeField]
+    private float lastLeftDistRefPoint;
+    [SerializeField]
+    private float lastRightDistRefPoint;
+    [SerializeField]
+    private float leftDistRefPoint;
+    [SerializeField]
+    private float rightDistRefPoint;
+    private float conSeparation;
+    private float refPointPenalty;
+
+    [SerializeField]
+    private List<Vector3> lastLeftPosList = new List<Vector3>();
+    [SerializeField]
+    private List<Vector3> lastRightPosList = new List<Vector3>();
+    private Vector3 currentLeftConLocalPos;
+    private Vector3 currentRightConLocalPos;
+
     // Start is called before the first frame update
     void Start()
     {
         if (leftConPos != null && rightConPos != null)
         {
-            lastLeftConPos = locomotion.transform.rotation * leftConPos.action.ReadValue<Vector3>();
-            lastRightConPos = locomotion.transform.rotation * rightConPos.action.ReadValue<Vector3>();
+            lastLeftConPos = locomotion.transform.TransformPoint(leftConPos.action.ReadValue<Vector3>());
+            lastRightConPos = locomotion.transform.TransformPoint(rightConPos.action.ReadValue<Vector3>());
+            lastLeftDistRefPoint = Vector3.Distance(lastLeftConPos, refPoint.transform.position);
+            lastRightDistRefPoint = Vector3.Distance(lastRightConPos, refPoint.transform.position);
             vibration = locomotion.GetComponent<Vibration>();
         }
     }
@@ -50,14 +76,37 @@ public class divingCamDir : MonoBehaviour
     {
         if(leftConPos != null && rightConPos != null)
         {
-            currentLeftConPos = locomotion.transform.rotation * leftConPos.action.ReadValue<Vector3>();
-            currentRightConPos = locomotion.transform.rotation * rightConPos.action.ReadValue<Vector3>();
+            currentLeftConLocalPos = leftConPos.action.ReadValue<Vector3>();
+            currentRightConLocalPos = rightConPos.action.ReadValue<Vector3>();
+            currentLeftConPos = locomotion.transform.TransformPoint(leftConPos.action.ReadValue<Vector3>());
+            currentRightConPos = locomotion.transform.TransformPoint(rightConPos.action.ReadValue<Vector3>());
 
-            if(currentLeftConPos.z < lastLeftConPos.z - movementThreshold && currentRightConPos.z < lastRightConPos.z - movementThreshold && rightGrab.action.IsPressed() && leftGrab.action.IsPressed())
+            // Distanzberechnung
+            leftDistRefPoint = Vector3.Distance(currentLeftConPos, refPoint.transform.position);
+            rightDistRefPoint = Vector3.Distance(currentRightConPos, refPoint.transform.position);
+            conSeparation = Vector3.Distance(currentLeftConPos, currentRightConPos);
+            refPointPenalty = Mathf.Abs(leftDistRefPoint - rightDistRefPoint);
+            
+
+            if(leftDistRefPoint < lastLeftDistRefPoint - movementThreshold && rightDistRefPoint < lastRightDistRefPoint - movementThreshold)
             {
-				currentSpeed += acceleration * Time.deltaTime;
-				currentSpeed = Mathf.Clamp(currentSpeed, 0f, maxSpeed);
-				
+                float effectiveSeparation = conSeparation - refPointPenalty;
+                effectiveSeparation = Mathf.Max(0, effectiveSeparation * separationFactor);
+                float effectiveDist = (lastLeftDistRefPoint - leftDistRefPoint + lastRightDistRefPoint - rightDistRefPoint) / 2;
+                effectiveDist *= 400;
+
+				currentSpeed += (acceleration * effectiveSeparation * effectiveDist) * Time.deltaTime;
+
+                // Geringer Bewegungsraum
+                if (IsPosNearPosInList(lastLeftPosList, currentLeftConLocalPos, 0.15f) || IsPosNearPosInList(lastRightPosList, currentRightConLocalPos, 0.15f))
+                {
+                    currentSpeed -= 5f * deceleration * Time.deltaTime;
+                }
+                UpdateList(lastLeftPosList, currentLeftConLocalPos);
+                UpdateList(lastRightPosList, currentRightConLocalPos);
+
+                currentSpeed = Mathf.Clamp(currentSpeed, 0f, maxSpeed);
+
                 Vector3 forwardDirection = mainCamera.transform.forward;
                 Vector3 movement = forwardDirection * currentSpeed * Time.deltaTime;
                 locomotion.transform.position += movement;
@@ -70,10 +119,12 @@ public class divingCamDir : MonoBehaviour
                 Vector3 movement = forwardDirection * currentSpeed * Time.deltaTime;
                 locomotion.transform.position += movement;
 			}	
-			
+
             lastLeftConPos = currentLeftConPos;
             lastRightConPos = currentRightConPos;
-            //Debug.Log(currentSpeed);
+            lastLeftDistRefPoint = leftDistRefPoint;
+            lastRightDistRefPoint = rightDistRefPoint;
+            //Debug.Log("Speed: " + currentSpeed);
 
             float bIntensity = Mathf.Abs((currentSpeed / maxSpeed) * 0.25f);
             if (bIntensity > 0.025f)
@@ -86,5 +137,25 @@ public class divingCamDir : MonoBehaviour
                 vibration.activeVib = false;
             }
         }
+    }
+
+    private void UpdateList(List<Vector3> posList, Vector3 pos)
+    {
+        posList.Add(pos);
+        if(posList.Count > posListLimit)
+        {
+            posList.RemoveAt(0);
+        }
+    }
+    private bool IsPosNearPosInList(List<Vector3> posList, Vector3 currentPos, float threshold)
+    {
+        foreach (Vector3 pos in posList)
+        {
+            if(Vector3.Distance(pos, currentPos) >= threshold)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }

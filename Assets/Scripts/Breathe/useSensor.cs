@@ -26,10 +26,10 @@ public class useSensor : MonoBehaviour
     private List<float> lastValues = new List<float>();
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        //Ü Überbrüfung, ob der Sensor den Wert aktualisiert hat (gerade nur 100 mal in der Sekunde (HZ))
-        if(lastValues.Count > 0 && Mathf.Abs(sensorValue - lastValues[lastValues.Count -1]) < 0.00001)
+        // Überbrüfung, ob der Sensor den Wert aktualisiert hat (gerade nur 100 mal in der Sekunde (HZ))
+        if(lastValues.Count > 0 && Mathf.Approximately(sensorValue, lastValues[lastValues.Count-1]))
         {
             return;
         }
@@ -37,7 +37,7 @@ public class useSensor : MonoBehaviour
         // Bewegungsfilter anwenden
         sensorValue = MovementFilter(sensorValue);
         // Durschnittsflter anwenden
-        //sensorValue = AverageFilter(sensorValue);
+        sensorValue = AverageFilter(sensorValue);
 
         //Debug.Log("SensorValue: " + sensorValue);
 
@@ -184,7 +184,7 @@ public class useSensor : MonoBehaviour
 
     private float AverageFilter(float value)
     {
-        if (lastValues.Count < maxCount || lastValues[0] == 0f)
+        if (lastValues.Count < maxCount || Mathf.Approximately(lastValues[0], 0f))
         {
             return value;
         }
@@ -193,7 +193,7 @@ public class useSensor : MonoBehaviour
         {
             averageValue += lV;
         }
-        averageValue = (averageValue + value) / (lastValues.Count + 1);
+        averageValue = (averageValue / lastValues.Count) * (1f - filterValue) + value * filterValue;
         return averageValue;
     }
 }
