@@ -18,6 +18,10 @@ public class divingMidDir : MonoBehaviour
     [SerializeField]
     private float movementThreshold = 0.001f;
     [SerializeField]
+    private float separationFactor = 0.2f;
+    [SerializeField]
+    private int posListLimit = 10;
+    [SerializeField]
     private InputActionReference leftConPos;
     [SerializeField]
     private InputActionReference rightConPos;
@@ -25,10 +29,6 @@ public class divingMidDir : MonoBehaviour
     private GameObject lCon;
     [SerializeField]
     private GameObject rCon;
-    [SerializeField]
-    private InputActionProperty leftGrab;
-    [SerializeField]
-    private InputActionProperty rightGrab;
 
     private Vibration vibration;
 
@@ -38,13 +38,27 @@ public class divingMidDir : MonoBehaviour
     private Vector3 currentRightConPos;
     private float currentSpeed;
 
+    private float lastLeftDistRefPoint;
+    private float lastRightDistRefPoint;
+    private float leftDistRefPoint;
+    private float rightDistRefPoint;
+    private float conSeparation;
+    private float refPointPenalty;
+
+    private List<Vector3> lastLeftPosList = new List<Vector3>();
+    private List<Vector3> lastRightPosList = new List<Vector3>();
+    private Vector3 currentLeftConLocalPos;
+    private Vector3 currentRightConLocalPos;
+
     // Start is called before the first frame update
     void Start()
     {
         if (leftConPos != null && rightConPos != null)
         {
-            lastLeftConPos = locomotion.transform.rotation * leftConPos.action.ReadValue<Vector3>();
-            lastRightConPos = locomotion.transform.rotation * rightConPos.action.ReadValue<Vector3>();
+            lastLeftConPos = lCon.transform.position;
+            lastRightConPos = rCon.transform.position;
+            lastLeftDistRefPoint = Vector3.Distance(lastLeftConPos, neckAnchor.transform.position);
+            lastRightDistRefPoint = Vector3.Distance(lastRightConPos, neckAnchor.transform.position);
             vibration = locomotion.GetComponent<Vibration>();
         }
     }
@@ -54,9 +68,18 @@ public class divingMidDir : MonoBehaviour
     {
         if (leftConPos != null && rightConPos != null)
         {
-            currentLeftConPos = locomotion.transform.rotation * leftConPos.action.ReadValue<Vector3>();
-            currentRightConPos = locomotion.transform.rotation * rightConPos.action.ReadValue<Vector3>();
+            currentLeftConLocalPos = leftConPos.action.ReadValue<Vector3>();
+            currentRightConLocalPos = rightConPos.action.ReadValue<Vector3>();
+            currentLeftConPos = lCon.transform.position;
+            currentRightConPos = rCon.transform.position;
 
+            // Distanzberechnung
+            leftDistRefPoint = Vector3.Distance(currentLeftConPos, neckAnchor.transform.position);
+            rightDistRefPoint = Vector3.Distance(currentRightConPos, neckAnchor.transform.position);
+            conSeparation = Vector3.Distance(currentLeftConPos, currentRightConPos);
+            refPointPenalty = Mathf.Abs(leftDistRefPoint - rightDistRefPoint);
+
+            // Mittlerer Vektor
             Vector3 midCons = (lCon.transform.position + rCon.transform.position) / 2;
             Vector3 underCam = neckAnchor.transform.position;
             Vector3 middleDirection = midCons - underCam;
@@ -66,11 +89,23 @@ public class divingMidDir : MonoBehaviour
             Debug.DrawLine(underCam, midCons, Color.red, 0.2f);
             Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
 
-            if (((currentLeftConPos.z < lastLeftConPos.z - movementThreshold && currentRightConPos.z < lastRightConPos.z - movementThreshold)
-                || (currentLeftConPos.x < lastLeftConPos.x - movementThreshold && currentRightConPos.x < lastRightConPos.x - movementThreshold))
-                && rightGrab.action.IsPressed() && leftGrab.action.IsPressed())
+            if (leftDistRefPoint < lastLeftDistRefPoint - movementThreshold && rightDistRefPoint < lastRightDistRefPoint - movementThreshold)
             {
-                currentSpeed += acceleration * Time.deltaTime;
+                float effectiveSeparation = conSeparation - refPointPenalty;
+                effectiveSeparation = Mathf.Max(0, effectiveSeparation * separationFactor);
+                float effectiveDist = (lastLeftDistRefPoint - leftDistRefPoint + lastRightDistRefPoint - rightDistRefPoint) / 2;
+                effectiveDist *= 400;
+
+                currentSpeed += (acceleration * effectiveSeparation * effectiveDist) * Time.deltaTime;
+
+                // Geringer Bewegungsraum
+                if (IsPosNearPosInList(lastLeftPosList, currentLeftConLocalPos, 0.15f) || IsPosNearPosInList(lastRightPosList, currentRightConLocalPos, 0.15f))
+                {
+                    currentSpeed -= 5f * deceleration * Time.deltaTime;
+                }
+                UpdateList(lastLeftPosList, currentLeftConLocalPos);
+                UpdateList(lastRightPosList, currentRightConLocalPos);
+
                 currentSpeed = Mathf.Clamp(currentSpeed, 0f, maxSpeed);
 
                 Vector3 movement = middleDirection * currentSpeed * Time.deltaTime;
@@ -87,6 +122,8 @@ public class divingMidDir : MonoBehaviour
 
             lastLeftConPos = currentLeftConPos;
             lastRightConPos = currentRightConPos;
+            lastLeftDistRefPoint = leftDistRefPoint;
+            lastRightDistRefPoint = rightDistRefPoint;
             //Debug.Log(currentSpeed);
 
             float bIntensity = Mathf.Abs((currentSpeed / maxSpeed) * 0.25f);
@@ -101,4 +138,25 @@ public class divingMidDir : MonoBehaviour
             }
         }
     }
+
+    private void UpdateList(List<Vector3> posList, Vector3 pos)
+    {
+        posList.Add(pos);
+        if (posList.Count > posListLimit)
+        {
+            posList.RemoveAt(0);
+        }
+    }
+    private bool IsPosNearPosInList(List<Vector3> posList, Vector3 currentPos, float threshold)
+    {
+        foreach (Vector3 pos in posList)
+        {
+            if (Vector3.Distance(pos, currentPos) >= threshold)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

@@ -22,15 +22,15 @@ public class divingCamDir : MonoBehaviour
     [SerializeField]
     private float separationFactor = 0.2f;
     [SerializeField]
-    private int posListLimit = 50;
+    private int posListLimit = 10;
+    [SerializeField]
+    private GameObject lCon;
+    [SerializeField]
+    private GameObject rCon;
     [SerializeField]
     private InputActionReference leftConPos;
     [SerializeField]
     private InputActionReference rightConPos;
-    [SerializeField]
-    private InputActionProperty leftGrab;
-    [SerializeField]
-    private InputActionProperty rightGrab;
 
     private Vibration vibration;
 
@@ -40,20 +40,14 @@ public class divingCamDir : MonoBehaviour
     private Vector3 currentRightConPos;
 	private float currentSpeed;
 
-    [SerializeField]
     private float lastLeftDistRefPoint;
-    [SerializeField]
     private float lastRightDistRefPoint;
-    [SerializeField]
     private float leftDistRefPoint;
-    [SerializeField]
     private float rightDistRefPoint;
     private float conSeparation;
     private float refPointPenalty;
 
-    [SerializeField]
     private List<Vector3> lastLeftPosList = new List<Vector3>();
-    [SerializeField]
     private List<Vector3> lastRightPosList = new List<Vector3>();
     private Vector3 currentLeftConLocalPos;
     private Vector3 currentRightConLocalPos;
@@ -63,8 +57,8 @@ public class divingCamDir : MonoBehaviour
     {
         if (leftConPos != null && rightConPos != null)
         {
-            lastLeftConPos = locomotion.transform.TransformPoint(leftConPos.action.ReadValue<Vector3>());
-            lastRightConPos = locomotion.transform.TransformPoint(rightConPos.action.ReadValue<Vector3>());
+            lastLeftConPos = lCon.transform.position;
+            lastRightConPos = rCon.transform.position;
             lastLeftDistRefPoint = Vector3.Distance(lastLeftConPos, refPoint.transform.position);
             lastRightDistRefPoint = Vector3.Distance(lastRightConPos, refPoint.transform.position);
             vibration = locomotion.GetComponent<Vibration>();
@@ -78,8 +72,8 @@ public class divingCamDir : MonoBehaviour
         {
             currentLeftConLocalPos = leftConPos.action.ReadValue<Vector3>();
             currentRightConLocalPos = rightConPos.action.ReadValue<Vector3>();
-            currentLeftConPos = locomotion.transform.TransformPoint(leftConPos.action.ReadValue<Vector3>());
-            currentRightConPos = locomotion.transform.TransformPoint(rightConPos.action.ReadValue<Vector3>());
+            currentLeftConPos = lCon.transform.position;
+            currentRightConPos = rCon.transform.position;
 
             // Distanzberechnung
             leftDistRefPoint = Vector3.Distance(currentLeftConPos, refPoint.transform.position);
