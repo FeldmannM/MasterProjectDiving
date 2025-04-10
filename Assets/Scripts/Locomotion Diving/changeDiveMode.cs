@@ -12,7 +12,7 @@ public class changeDiveMode : MonoBehaviour
     [SerializeField]
     private GameObject locomotionBase;
     [SerializeField]
-    private List<MonoBehaviour> scripts;
+    public List<MonoBehaviour> scripts;
     [SerializeField]
     private GameObject HandL;
     [SerializeField]
@@ -21,7 +21,7 @@ public class changeDiveMode : MonoBehaviour
     private GameObject DivingFinL;
     [SerializeField]
     private GameObject DivingFinR;
-    private int currentIndex = 0;
+    public int currentIndex = 0;
 
     //private List<float> rotations = new List<float> { 0f, 90f, 180f, 270f };
     private List<float> rotations = new List<float> { 0f, 90f };
@@ -37,6 +37,7 @@ public class changeDiveMode : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /* deprecated
         if (rightP.action.WasPerformedThisFrame())
         {
             rotIndex = (rotIndex + 1) % rotations.Count;
@@ -64,5 +65,6 @@ public class changeDiveMode : MonoBehaviour
                 DivingFinR.SetActive(true);
             }
         }
+        */
     }
 }

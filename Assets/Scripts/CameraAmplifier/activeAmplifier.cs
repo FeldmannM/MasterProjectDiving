@@ -18,7 +18,7 @@ public class activeAmplifier : MonoBehaviour
         if (leftSelect.action.WasPerformedThisFrame())
         {
             isActive = !isActive;
-            cameraParent.GetComponent<RotationAmplifier>().enabled = isActive;
+            cameraParent.GetComponent<OneAxisRotation>().enabled = isActive;
             if(isActive == false)
             {
                 cameraParent.transform.localRotation = Quaternion.Euler(0, 0, 0);
