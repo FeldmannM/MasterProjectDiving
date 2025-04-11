@@ -44,14 +44,18 @@ public class Lever : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Mathf.Abs(hinge.angle - prevAngle) > Mathf.Epsilon)
+        if(Mathf.Abs(hinge.angle - prevAngle) > 0.001f)
         {
             if(hinge.angle < 0)
             {
                 if (PosLever)
                 {
-                    Quaternion newRot = Quaternion.Euler(0f, 0f, 0f);
-                    locomotionBase.transform.rotation = newRot;
+                    if(prevAngle > 0)
+                    {
+                        Quaternion newRot = Quaternion.Euler(0f, 0f, 0f);
+                        prevAngle = hinge.angle;
+                        locomotionBase.GetComponent<activateMenu>().recalculateMenuPos(newRot, 0);
+                    }
                 }
                 else if (MethodLever){
                     if(divingMode.currentIndex == 2 || divingMode.currentIndex == 3)
@@ -79,8 +83,12 @@ public class Lever : MonoBehaviour
             {
                 if (PosLever)
                 {
-                    Quaternion newRot = Quaternion.Euler(90f, 0f, 0f);
-                    locomotionBase.transform.rotation = newRot;
+                    if (prevAngle < 0)
+                    {
+                        Quaternion newRot = Quaternion.Euler(90f, 0f, 0f);
+                        prevAngle = hinge.angle;
+                        locomotionBase.GetComponent<activateMenu>().recalculateMenuPos(newRot, 1);
+                    }
                 }
                 else if (MethodLever)
                 {
@@ -105,6 +113,7 @@ public class Lever : MonoBehaviour
                     }
                 }
             }
+            prevAngle = hinge.angle;
         }
     }
 }

@@ -10,14 +10,22 @@ public class activateMenu : MonoBehaviour
     [SerializeField]
     private Camera mainCamera;
     [SerializeField]
+    private GameObject locomotionBase;
+    [SerializeField]
     private InputActionProperty rightP;
+    [SerializeField]
+    private InputActionProperty rightGrab;
+    [SerializeField]
+    private InputActionProperty leftGrab;
     [SerializeField]
     private List<GameObject> levers;
     [SerializeField]
     private List<Vector3> leverRotations;
+    private Coroutine activeCoroutine;
 
     private bool isMoving = false;
-    private bool isVisible = true;
+    private bool isVisible = false;
+    private int posLever = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +36,7 @@ public class activateMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isMoving && rightP.action.WasPerformedThisFrame())
+        if (!isMoving && rightP.action.WasPerformedThisFrame() && !rightGrab.action.IsPressed() && !leftGrab.action.IsPressed())
         {
             if (!isVisible)
             {
@@ -91,15 +99,63 @@ public class activateMenu : MonoBehaviour
             float t = passedTime / 3f;
             if (moveDown)
             {
-                menuT.position = Vector3.Lerp(startPos, targetPos, 1 - Mathf.Pow(1 - t, 2));
+                menuT.position = Vector3.Lerp(startPos, targetPos, 1 - Mathf.Pow(1 - t, 3));
             }
             else
             {
-                menuT.position = Vector3.Lerp(startPos, targetPos, Mathf.Pow(t, 2));
+                menuT.position = Vector3.Lerp(startPos, targetPos, Mathf.Pow(t, 3f));
             }
             passedTime += Time.deltaTime;
             yield return null;
         }
         menuT.position = targetPos;
+    }
+
+    public void recalculateMenuPos(Quaternion newRot, int newLeverPos)
+    {
+        if(activeCoroutine != null)
+        {
+            StopCoroutine(activeCoroutine);
+            activeCoroutine = null;
+        }
+        activeCoroutine = StartCoroutine(RecalculatePos(newRot, newLeverPos));
+    }
+    IEnumerator RecalculatePos(Quaternion newRot, int newLeverPos)
+    {
+        isMoving = true;
+
+        while (rightGrab.action.IsPressed() || leftGrab.action.IsPressed())
+        {
+            yield return null;
+        }
+
+        if(newLeverPos != posLever)
+        {
+            posLever = newLeverPos;
+            locomotionBase.transform.rotation = newRot;
+
+            for (int i = 0; i < leverRotations.Count; i++)
+            {
+                leverRotations[i] = levers[i].transform.localRotation.eulerAngles;
+                levers[i].GetComponent<Lever>().enabled = false;
+                levers[i].transform.localRotation = Quaternion.Euler(new Vector3(0, 180, 0));
+                levers[i].SetActive(false);
+            }
+            Vector3 forwardXZ = mainCamera.transform.forward;
+            forwardXZ.y = 0;
+            menu.transform.position = mainCamera.transform.position + forwardXZ.normalized * 0.75f;
+            Vector3 lookToCamera = menu.transform.position - mainCamera.transform.position;
+            lookToCamera.y = 0;
+            menu.transform.rotation = Quaternion.LookRotation(lookToCamera);
+            levers[0].transform.localPosition = new Vector3 (-0.3f, 0f, -0.01f);
+            for (int i = 0; i < leverRotations.Count; i++)
+            {
+                levers[i].SetActive(true);
+                levers[i].transform.localRotation = Quaternion.Euler(leverRotations[i]);
+                levers[i].GetComponent<Lever>().enabled = true;
+            }
+        }
+
+        isMoving = false;
     }
 }

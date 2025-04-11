@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8328096972824518459
 Transform:
   m_ObjectHideFlags: 0
@@ -261,7 +261,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 135054911761446629}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64b17a9f8c520ba4eb6980b4715d837f, type: 3}
   m_Name: 
@@ -272,6 +272,7 @@ MonoBehaviour:
   DivingFinL: {fileID: 0}
   DivingFinR: {fileID: 0}
   locomotionBase: {fileID: 0}
+  firstStart: 1
   PosLever: 0
   MethodLever: 1
   DirLever: 0
@@ -294,7 +295,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7098265019637838455
 Transform:
   m_ObjectHideFlags: 0
@@ -536,7 +537,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 394891512160771322}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64b17a9f8c520ba4eb6980b4715d837f, type: 3}
   m_Name: 
@@ -547,6 +548,7 @@ MonoBehaviour:
   DivingFinL: {fileID: 0}
   DivingFinR: {fileID: 0}
   locomotionBase: {fileID: 0}
+  firstStart: 1
   PosLever: 0
   MethodLever: 0
   DirLever: 1
@@ -2201,7 +2203,7 @@ Transform:
   m_GameObject: {fileID: 7192585217623015003}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.02}
+  m_LocalPosition: {x: 0, y: 0, z: -0.0175}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -2565,7 +2567,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3905535033406634887
 Transform:
   m_ObjectHideFlags: 0
@@ -2609,7 +2611,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3798313751190142730
 Transform:
   m_ObjectHideFlags: 0
@@ -2851,7 +2853,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9134490395928660798}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64b17a9f8c520ba4eb6980b4715d837f, type: 3}
   m_Name: 
@@ -2862,6 +2864,7 @@ MonoBehaviour:
   DivingFinL: {fileID: 0}
   DivingFinR: {fileID: 0}
   locomotionBase: {fileID: 0}
+  firstStart: 1
   PosLever: 1
   MethodLever: 0
   DirLever: 0

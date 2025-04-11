@@ -473,7 +473,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &136565536
 Transform:
   m_ObjectHideFlags: 0
@@ -501,9 +501,9 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.4
   m_Range: 12
-  m_SpotAngle: 65
+  m_SpotAngle: 120
   m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
@@ -535,7 +535,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 2
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -7910,6 +7910,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 608998643}
   mainCamera: {fileID: 9014170784976475920}
+  locomotionBase: {fileID: 1909671295}
   rightP:
     m_UseReference: 1
     m_Action:
@@ -7922,6 +7923,30 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 9121629049433909547, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  rightGrab:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Right Grab
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 9432a21c-1071-44c4-b4e8-94cc37f2df01
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  leftGrab:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Left Grab
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: b4dc3673-e1d3-4234-b752-3dd3d0f4e20f
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   levers:
   - {fileID: 912083959720951946}
   - {fileID: 3493367097983833054}
@@ -16760,6 +16785,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 135054911761446629, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 394891512160771322, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 518885800171830112, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
       propertyPath: HandL
       value: 
@@ -16769,8 +16802,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 932573383}
     - target: {fileID: 518885800171830112, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
-      propertyPath: PosLever
-      value: 1
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 518885800171830112, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
       propertyPath: DivingFinL
@@ -16793,6 +16826,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 932573383}
     - target: {fileID: 1897365254250215076, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1897365254250215076, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
       propertyPath: DivingFinL
       value: 
       objectReference: {fileID: 2067210578}
@@ -16800,10 +16837,6 @@ PrefabInstance:
       propertyPath: DivingFinR
       value: 
       objectReference: {fileID: 1581790227}
-    - target: {fileID: 1897365254250215076, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
-      propertyPath: MethodLever
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1897365254250215076, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
       propertyPath: locomotionBase
       value: 
@@ -16857,8 +16890,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 932573383}
     - target: {fileID: 6758187393311484520, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
-      propertyPath: DirLever
-      value: 1
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6758187393311484520, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
       propertyPath: DivingFinL
@@ -16878,34 +16911,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9034828952084578737, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9095862619890721989, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.0175
       objectReference: {fileID: 0}
+    - target: {fileID: 9134490395928660798, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 791915486261694994, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 5329505566857502903, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 747236395291137942, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 4822967717521624635, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 7577628005182254439, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 1320399823602297044, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6eb326be413065b4d8507c4e548df2e6, type: 3}
 --- !u!135 &8349061880857044358
 SphereCollider:
