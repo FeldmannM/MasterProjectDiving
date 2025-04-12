@@ -44,7 +44,7 @@ public class Lever : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Mathf.Abs(hinge.angle - prevAngle) > 0.001f)
+        if((Mathf.Abs(hinge.angle - prevAngle) > 0.001f) && hinge.angle != 0)
         {
             if(hinge.angle < 0)
             {

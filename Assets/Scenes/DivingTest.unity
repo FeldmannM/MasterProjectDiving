@@ -1133,11 +1133,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationAnchor: {fileID: 218337660}
   mainCamera: {fileID: 9014170784976475920}
+  locomotionBase: {fileID: 1909671295}
+  camOffset: {fileID: 9014170784759106357}
   leftController: {fileID: 9014170784358266728}
   lCon: {fileID: 619149921}
   rightController: {fileID: 9014170784819656599}
   rCon: {fileID: 376099193}
-  rotAmplifier: 1.5
+  rotAmplifier: 2
 --- !u!4 &307717612 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7165380528212061700, guid: e5434fc7defd17c48bdfe25b3b8c2243, type: 3}
@@ -7955,6 +7957,7 @@ MonoBehaviour:
   - {x: 0, y: 180, z: 0}
   - {x: 0, y: 180, z: 0}
   - {x: 0, y: 180, z: 0}
+  posLever: 0
 --- !u!1 &1910314324 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7288130069772893248, guid: bf373bb539cfa2f4cb0197ad747c9b4e, type: 3}

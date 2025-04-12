@@ -49,7 +49,9 @@ public class divingWithFeetCamDir : MonoBehaviour
             currentLeftConPos = locomotion.transform.rotation * leftConPos.action.ReadValue<Vector3>();
             currentRightConPos = locomotion.transform.rotation * rightConPos.action.ReadValue<Vector3>();
 
-            if (currentLeftConPos.y < lastLeftConPos.y - movementThreshold || currentRightConPos.y < lastRightConPos.y - movementThreshold)
+            if ((currentLeftConPos.y < lastLeftConPos.y - movementThreshold && currentRightConPos.y < lastRightConPos.y - movementThreshold) 
+                || (currentLeftConPos.y < lastLeftConPos.y - movementThreshold && currentRightConPos.y > lastRightConPos.y + movementThreshold)
+                || (currentLeftConPos.y > lastLeftConPos.y + movementThreshold && currentRightConPos.y < lastRightConPos.y - movementThreshold))
             {
                 currentSpeed += acceleration * Time.deltaTime;
                 currentSpeed = Mathf.Clamp(currentSpeed, 0f, maxSpeed);

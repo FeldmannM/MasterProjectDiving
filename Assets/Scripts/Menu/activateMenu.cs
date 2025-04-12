@@ -25,6 +25,7 @@ public class activateMenu : MonoBehaviour
 
     private bool isMoving = false;
     private bool isVisible = false;
+    [SerializeField]
     private int posLever = 0;
 
     // Start is called before the first frame update
@@ -141,6 +142,9 @@ public class activateMenu : MonoBehaviour
                 levers[i].transform.localRotation = Quaternion.Euler(new Vector3(0, 180, 0));
                 levers[i].SetActive(false);
             }
+
+            yield return null;
+
             Vector3 forwardXZ = mainCamera.transform.forward;
             forwardXZ.y = 0;
             menu.transform.position = mainCamera.transform.position + forwardXZ.normalized * 0.75f;

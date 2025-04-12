@@ -62,7 +62,9 @@ public class divingWithFeetMidDir : MonoBehaviour
             Debug.DrawLine(underCam, midCons, Color.red, 0.2f);
             Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
 
-            if (currentLeftConPos.y < lastLeftConPos.y - movementThreshold || currentRightConPos.y < lastRightConPos.y - movementThreshold)
+            if ((currentLeftConPos.y < lastLeftConPos.y - movementThreshold && currentRightConPos.y < lastRightConPos.y - movementThreshold)
+                || (currentLeftConPos.y < lastLeftConPos.y - movementThreshold && currentRightConPos.y > lastRightConPos.y + movementThreshold)
+                || (currentLeftConPos.y > lastLeftConPos.y + movementThreshold && currentRightConPos.y < lastRightConPos.y - movementThreshold))
             {
                 currentSpeed += acceleration * Time.deltaTime;
                 currentSpeed = Mathf.Clamp(currentSpeed, 0f, maxSpeed);
