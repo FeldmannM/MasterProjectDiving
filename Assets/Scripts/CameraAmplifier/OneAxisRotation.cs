@@ -11,7 +11,9 @@ public class OneAxisRotation : MonoBehaviour
     [SerializeField]
     private GameObject locomotionBase;
     [SerializeField]
-    private GameObject camOffset;
+    private GameObject refPointAnchor;
+    [SerializeField]
+    private GameObject refPoint;
     [SerializeField]
     private GameObject leftController;
     [SerializeField]
@@ -26,69 +28,43 @@ public class OneAxisRotation : MonoBehaviour
 
     void LateUpdate()
     {
-        Vector3 anchorRot = new Vector3(0, 0, 0);
-        Quaternion camRot = mainCamera.transform.localRotation;
-        if (locomotionBase.transform.localRotation.eulerAngles.x == 90)
+        if (Mathf.Abs(locomotionBase.transform.localRotation.eulerAngles.x - 90f) < 1f)
         {
-            Debug.Log("X: " + camRot.eulerAngles.x);
-            Vector3 currentCamRot = camRot.eulerAngles;
-            Debug.Log("OLDROT: " + currentCamRot.z);
-
-            Vector3 target = camOffset.transform.forward;
-            target = Quaternion.Euler(-90f, camRot.eulerAngles.y, 0) * target;
-            float alignment = Vector3.Dot(mainCamera.transform.forward, target);
-            Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * 5, Color.green, 0.1f);
-            Debug.DrawRay(mainCamera.transform.position, target * 5, Color.yellow, 0.1f);
-
-            if (alignment > 0)
-            //if(currentCamRot.x > -90f)
-            {
-                
-                Debug.Log("Größer");
-                
-                float normalizedZ = currentCamRot.z < 180 ? currentCamRot.z : currentCamRot.z;
-                Debug.Log("NEWROT1: " + normalizedZ);
-                float amplifiedCamRot = (rotAmplifier - 1f) * normalizedZ;
-                //amplifiedCamRot = Mathf.Clamp(amplifiedCamRot, -180f, 180f);
-                Debug.Log("NEWROT2: " + amplifiedCamRot);
-                anchorRot.z = amplifiedCamRot;
-                
-            }
-            //else if(currentCamRot.x < -90f)
-            else if (alignment < 0)
-            {
-                
-                Debug.Log("Kleiner");
-                
-                float normalizedZ = currentCamRot.z < 180 ? currentCamRot.z - 180f: currentCamRot.z + 180f;
-                Debug.Log("NEWROT1: " + normalizedZ);
-                float amplifiedCamRot = (rotAmplifier - 1f) * normalizedZ;
-                //amplifiedCamRot = Mathf.Clamp(amplifiedCamRot, -180f, 180f);
-                Debug.Log("NEWROT2: " + amplifiedCamRot);
-                anchorRot.z = amplifiedCamRot;
-                
-            }
-
+            Debug.Log("Liegend");
+            rotationAnchor.transform.localRotation = Quaternion.identity;
+            refPoint.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+            refPointAnchor.transform.position = mainCamera.transform.position;
+            Vector3 forwardRefPoint = refPoint.transform.forward;
+            Vector3 forwardCam = mainCamera.transform.forward;
+            forwardRefPoint.y = 0;
+            forwardCam.y = 0;
+            forwardRefPoint.Normalize();
+            forwardCam.Normalize();
+            Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * 5f, Color.green, 0.1f);
+            Debug.DrawRay(refPoint.transform.position, refPoint.transform.forward * 5f, Color.yellow, 0.1f);
+            float angleY = - Vector3.SignedAngle(forwardRefPoint, forwardCam, Vector3.up);
+            Debug.Log("Angle: " + angleY);
+            float amplifiedY = (rotAmplifier - 1) * angleY;
+            rotationAnchor.transform.rotation *= Quaternion.AngleAxis(amplifiedY, Vector3.forward);
         }
         else
         {
-            Vector3 currentCamRot = camRot.eulerAngles;
-            float normalizedY = currentCamRot.y > 180 ? currentCamRot.y - 360f : currentCamRot.y;
-            float amplifiedCamRot = (rotAmplifier - 1f) * normalizedY;
-            amplifiedCamRot = Mathf.Clamp(amplifiedCamRot, -180f, 180f);
-            anchorRot.y = amplifiedCamRot;
+            Debug.Log("Sitzend");
+            rotationAnchor.transform.localRotation = Quaternion.identity;
+            refPoint.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+            refPointAnchor.transform.position = mainCamera.transform.position;
+            Vector3 forwardRefPoint = refPoint.transform.forward;
+            Vector3 forwardCam = mainCamera.transform.forward;
+            forwardRefPoint.y = 0;
+            forwardCam.y = 0;
+            forwardRefPoint.Normalize();
+            forwardCam.Normalize();
+            Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * 5f, Color.green, 0.1f);
+            Debug.DrawRay(refPoint.transform.position, refPoint.transform.forward * 5f, Color.yellow, 0.1f);
+            float angleY = Vector3.SignedAngle(forwardRefPoint,forwardCam, Vector3.up);
+            Debug.Log("Angle: " + angleY);
+            float amplifiedY = (rotAmplifier - 1) * angleY;
+            rotationAnchor.transform.rotation *= Quaternion.AngleAxis(amplifiedY, Vector3.up);
         }
-        rotationAnchor.transform.localRotation = Quaternion.Euler(anchorRot);
-
-        /*
-        Quaternion leftConRot = leftController.transform.rotation;
-        leftController.transform.RotateAround(anchorPos, Vector3.up, rotAmplifier * leftConRot.eulerAngles.y);
-        Quaternion lConRot = lCon.transform.rotation;
-        lCon.transform.RotateAround(anchorPos, Vector3.up, rotAmplifier * lConRot.eulerAngles.y);
-        Quaternion rightConRot = rightController.transform.rotation;
-        rightController.transform.RotateAround(anchorPos, Vector3.up, rotAmplifier * rightConRot.eulerAngles.y);
-        Quaternion rConRot = rCon.transform.rotation;
-        rCon.transform.RotateAround(anchorPos, Vector3.up, rotAmplifier * rConRot.eulerAngles.y);
-        */
     }
 }
