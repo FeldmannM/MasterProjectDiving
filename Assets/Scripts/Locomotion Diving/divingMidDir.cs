@@ -10,6 +10,8 @@ public class divingMidDir : MonoBehaviour
     [SerializeField]
     private GameObject neckAnchor;
     [SerializeField]
+    private GameObject breathe;
+    [SerializeField]
     private float maxSpeed = 1.5f;
     [SerializeField]
     private float acceleration = 5f;
@@ -50,6 +52,8 @@ public class divingMidDir : MonoBehaviour
     private Vector3 currentLeftConLocalPos;
     private Vector3 currentRightConLocalPos;
 
+    private useSensor sensor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,6 +65,7 @@ public class divingMidDir : MonoBehaviour
             lastRightDistRefPoint = Vector3.Distance(lastRightConPos, neckAnchor.transform.position);
             vibration = locomotion.GetComponent<Vibration>();
         }
+        sensor = breathe.GetComponent<useSensor>();
     }
 
     // Update is called once per frame
@@ -110,6 +115,16 @@ public class divingMidDir : MonoBehaviour
 
                 Vector3 movement = middleDirection * currentSpeed * Time.deltaTime;
                 locomotion.transform.position += movement;
+                sensor.currentLocomotionState = 2;
+            }
+            else if (leftDistRefPoint > lastLeftDistRefPoint + movementThreshold && rightDistRefPoint > lastRightDistRefPoint + movementThreshold)
+            {
+                currentSpeed -= deceleration * Time.deltaTime;
+                currentSpeed = Mathf.Max(currentSpeed, 0f);
+
+                Vector3 movement = middleDirection * currentSpeed * Time.deltaTime;
+                locomotion.transform.position += movement;
+                sensor.currentLocomotionState = 1;
             }
             else
             {
@@ -118,6 +133,7 @@ public class divingMidDir : MonoBehaviour
 
                 Vector3 movement = middleDirection * currentSpeed * Time.deltaTime;
                 locomotion.transform.position += movement;
+                sensor.currentLocomotionState = 0;
             }
 
             lastLeftConPos = currentLeftConPos;

@@ -894,7 +894,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 200209871}
-  sensor: {fileID: 791931956}
   maxSize: 1000
   graphWidth: 5
   xpos: -2.5
@@ -1134,7 +1133,6 @@ MonoBehaviour:
   rotationAnchor: {fileID: 218337660}
   mainCamera: {fileID: 9014170784976475920}
   locomotionBase: {fileID: 1909671295}
-  camOffset: {fileID: 9014170784759106357}
   refPointAnchor: {fileID: 1852938574}
   refPoint: {fileID: 941736214}
   leftController: {fileID: 9014170784358266728}
@@ -2912,12 +2910,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensorValue: 0
+  sensorPlotGO: {fileID: 200209869}
   stagnationThreshold: 0.001
   filterThreshold: 0.005
   filterValue: 0.75
   percentThreshold: 0.8
   maxCount: 20
   lastValues: []
+  currentLocomotionState: 0
 --- !u!1001 &797620727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7771,6 +7771,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locomotion: {fileID: 1909671295}
   mainCamera: {fileID: 9014170784976475920}
+  breathe: {fileID: 791931949}
   maxSpeed: 1.5
   acceleration: 0.5
   deceleration: 1
@@ -7867,6 +7868,7 @@ MonoBehaviour:
   locomotion: {fileID: 1909671295}
   mainCamera: {fileID: 9014170784976475920}
   refPoint: {fileID: 78744187}
+  breathe: {fileID: 791931949}
   maxSpeed: 1.5
   acceleration: 5
   deceleration: 0.75
@@ -7931,6 +7933,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locomotion: {fileID: 1909671295}
   neckAnchor: {fileID: 78744187}
+  breathe: {fileID: 791931949}
   maxSpeed: 1.5
   acceleration: 0.5
   deceleration: 1
@@ -7953,6 +7956,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locomotion: {fileID: 1909671295}
   neckAnchor: {fileID: 78744187}
+  breathe: {fileID: 791931949}
   maxSpeed: 1.5
   acceleration: 3
   deceleration: 0.75

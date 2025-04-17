@@ -10,6 +10,8 @@ public class divingWithFeetMidDir : MonoBehaviour
     [SerializeField]
     private GameObject neckAnchor;
     [SerializeField]
+    private GameObject breathe;
+    [SerializeField]
     private float maxSpeed = 1.5f;
     [SerializeField]
     private float acceleration = 2f;
@@ -34,6 +36,8 @@ public class divingWithFeetMidDir : MonoBehaviour
     private Vector3 currentRightConPos;
     private float currentSpeed;
 
+    private useSensor sensor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +47,7 @@ public class divingWithFeetMidDir : MonoBehaviour
             lastRightConPos = locomotion.transform.rotation * rightConPos.action.ReadValue<Vector3>();
             vibration = locomotion.GetComponent<Vibration>();
         }
+        sensor = breathe.GetComponent<useSensor>();
     }
 
     // Update is called once per frame
@@ -80,6 +85,8 @@ public class divingWithFeetMidDir : MonoBehaviour
                 Vector3 movement = middleDirection * currentSpeed * Time.deltaTime;
                 locomotion.transform.position += movement;
             }
+
+            sensor.currentLocomotionState = 0;
 
             lastLeftConPos = currentLeftConPos;
             lastRightConPos = currentRightConPos;

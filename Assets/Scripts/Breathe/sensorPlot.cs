@@ -6,8 +6,9 @@ public class sensorPlot : MonoBehaviour
 {
     [SerializeField]
     private LineRenderer lineRenderer;
-    [SerializeField]
-    private useSensor sensor;
+    //[SerializeField]
+    //private useSensor sensor;
+    private float sensorValue = 0f;
     [SerializeField]
     private int maxSize = 50;
     [SerializeField]
@@ -18,7 +19,6 @@ public class sensorPlot : MonoBehaviour
     private float ypos = 0f;
     [SerializeField]
     private float zpos = 0f;
-
 
     private List<Vector3> points = new List<Vector3>();
 
@@ -36,7 +36,7 @@ public class sensorPlot : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        float sensorValue = sensor.sensorValue;
+        //float sensorValue = sensor.sensorValue;
 
         for (int i = 0; i < points.Count; i++)
         {
@@ -50,5 +50,10 @@ public class sensorPlot : MonoBehaviour
         }
         lineRenderer.positionCount = points.Count;
         lineRenderer.SetPositions(points.ToArray());
+    }
+
+    public void setSensorValue(float value)
+    {
+        sensorValue = value;
     }
 }

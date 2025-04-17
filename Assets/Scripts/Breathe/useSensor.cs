@@ -6,6 +6,8 @@ public class useSensor : MonoBehaviour
 {
     public float sensorValue;
     [SerializeField]
+    private GameObject sensorPlotGO;
+    [SerializeField]
     private float stagnationThreshold = 0.001f;
     [SerializeField]
     private float filterThreshold = 0.005f;
@@ -25,13 +27,27 @@ public class useSensor : MonoBehaviour
     [SerializeField]
     private List<float> lastValues = new List<float>();
 
+    public int currentLocomotionState = 0;
+
     // Update is called once per frame
     void FixedUpdate()
     {
-        // Überbrüfung, ob der Sensor den Wert aktualisiert hat (gerade nur 100 mal in der Sekunde (HZ))
+        // Überprüfung, ob der Sensor den Wert aktualisiert hat (gerade nur 100 mal in der Sekunde (HZ))
         if(lastValues.Count > 0 && Mathf.Approximately(sensorValue, lastValues[lastValues.Count-1]))
         {
             return;
+        }
+
+        // auf Bewegung mit den Haenden reagieren
+        // Wert sinkt normalerweise beim Erhöhen der Distanz zu einem
+        if(currentLocomotionState == 1)
+        {
+            sensorValue += 0.2f;
+        }
+        // Wert steigt normalerweise liecht beim Verringern der Distanz zu einem
+        else if (currentLocomotionState == 2)
+        {
+            sensorValue -= 0.02f;
         }
 
         // Bewegungsfilter anwenden
@@ -40,6 +56,13 @@ public class useSensor : MonoBehaviour
         sensorValue = AverageFilter(sensorValue);
 
         //Debug.Log("SensorValue: " + sensorValue);
+
+        // Wert dem Plot übergeben
+        if (sensorPlotGO.activeSelf)
+        {
+            sensorPlotGO.GetComponent<sensorPlot>().setSensorValue(sensorValue);
+        }
+
 
         // Liste der letzten paar Werte
         lastValues.Add(sensorValue);

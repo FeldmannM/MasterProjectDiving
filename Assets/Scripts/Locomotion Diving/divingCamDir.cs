@@ -11,6 +11,8 @@ public class divingCamDir : MonoBehaviour
     private Camera mainCamera;
     [SerializeField]
     private GameObject refPoint;
+    [SerializeField]
+    private GameObject breathe;
 	[SerializeField]
     private float maxSpeed = 1.5f;
 	[SerializeField]
@@ -52,6 +54,8 @@ public class divingCamDir : MonoBehaviour
     private Vector3 currentLeftConLocalPos;
     private Vector3 currentRightConLocalPos;
 
+    private useSensor sensor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,6 +67,7 @@ public class divingCamDir : MonoBehaviour
             lastRightDistRefPoint = Vector3.Distance(lastRightConPos, refPoint.transform.position);
             vibration = locomotion.GetComponent<Vibration>();
         }
+        sensor = breathe.GetComponent<useSensor>();
     }
 
     // Update is called once per frame
@@ -104,15 +109,29 @@ public class divingCamDir : MonoBehaviour
                 Vector3 forwardDirection = mainCamera.transform.forward;
                 Vector3 movement = forwardDirection * currentSpeed * Time.deltaTime;
                 locomotion.transform.position += movement;
+
+                sensor.currentLocomotionState = 2;
             }
-			else{
+            else if(leftDistRefPoint > lastLeftDistRefPoint + movementThreshold && rightDistRefPoint > lastRightDistRefPoint + movementThreshold)
+            {
+                currentSpeed -= deceleration * Time.deltaTime;
+                currentSpeed = Mathf.Max(currentSpeed, 0f);
+
+                Vector3 forwardDirection = mainCamera.transform.forward;
+                Vector3 movement = forwardDirection * currentSpeed * Time.deltaTime;
+                locomotion.transform.position += movement;
+                sensor.currentLocomotionState = 1;
+            }
+			else
+            {
 				currentSpeed -= deceleration * Time.deltaTime;
 				currentSpeed = Mathf.Max(currentSpeed, 0f);
 				
 				Vector3 forwardDirection = mainCamera.transform.forward;
                 Vector3 movement = forwardDirection * currentSpeed * Time.deltaTime;
                 locomotion.transform.position += movement;
-			}	
+                sensor.currentLocomotionState = 0;
+            }	
 
             lastLeftConPos = currentLeftConPos;
             lastRightConPos = currentRightConPos;
