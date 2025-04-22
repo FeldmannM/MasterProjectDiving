@@ -37,6 +37,7 @@ public class activateMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Menü aktivieren und deaktivieren
         if (!isMoving && rightP.action.WasPerformedThisFrame() && !rightGrab.action.IsPressed() && !leftGrab.action.IsPressed())
         {
             if (!isVisible)
@@ -48,8 +49,15 @@ public class activateMenu : MonoBehaviour
                 StartCoroutine(MenuUp());
             }
         }
+        // Menü deaktivieren falls man sich davon entfernt hat
+        float distMenuCam = Vector3.Distance(menu.transform.position, mainCamera.transform.position);
+        if(!isMoving && isVisible && distMenuCam > 5f)
+        {
+            StartCoroutine(MenuUp());
+        }
     }
 
+    // Menü aktivieren
     IEnumerator MenuDown()
     {
         isMoving = true;
@@ -73,6 +81,7 @@ public class activateMenu : MonoBehaviour
         }
     }
 
+    // Menü deaktivieren
     IEnumerator MenuUp()
     {
         for (int i = 0; i < leverRotations.Count; i++)
@@ -90,7 +99,7 @@ public class activateMenu : MonoBehaviour
         isVisible = false;
     }
 
-
+    // Zu der gewünschten Position verschieben
     IEnumerator MoveToPos(Transform menuT, Vector3 targetPos, bool moveDown)
     {
         float passedTime = 0f;
@@ -112,6 +121,8 @@ public class activateMenu : MonoBehaviour
         menuT.position = targetPos;
     }
 
+
+    // Menü Position neu berechnen, wenn man zwischen Sitzen und Liegen wechselt, damit man auch die Änderungen schnell wieder rückgängig machen kann
     public void recalculateMenuPos(Quaternion newRot, int newLeverPos)
     {
         if(activeCoroutine != null)

@@ -8,14 +8,14 @@ public class activeAmplifier : MonoBehaviour
     [SerializeField]
     private GameObject cameraParent;
     [SerializeField]
-    private InputActionProperty leftSelect;
+    private InputActionProperty rightConSec;
 
     private bool isActive = false;
 
     // Update is called once per frame
     void Update()
     {
-        if (leftSelect.action.WasPerformedThisFrame())
+        if (rightConSec.action.WasPerformedThisFrame())
         {
             isActive = !isActive;
             cameraParent.GetComponent<OneAxisRotation>().enabled = isActive;

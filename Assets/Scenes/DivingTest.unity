@@ -1072,18 +1072,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraParent: {fileID: 218337660}
-  leftSelect:
+  rightConSec:
     m_UseReference: 1
     m_Action:
-      m_Name: Left Select
+      m_Name: Right Con Sec
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: a58b55cc-4ce7-4105-826d-8eb875b062e3
+      m_Id: a629141b-2519-46b7-8d7f-5a073a5589d5
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    m_Reference: {fileID: -3738858423908444582, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!114 &218337664
 MonoBehaviour:
   m_ObjectHideFlags: 0
