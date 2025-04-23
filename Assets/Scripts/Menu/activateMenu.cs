@@ -104,16 +104,16 @@ public class activateMenu : MonoBehaviour
     {
         float passedTime = 0f;
         Vector3 startPos = menuT.position;
-        while (passedTime < 3f)
+        while (passedTime < 1.5f)
         {
-            float t = passedTime / 3f;
+            float t = passedTime / 1.5f;
             if (moveDown)
             {
-                menuT.position = Vector3.Lerp(startPos, targetPos, 1 - Mathf.Pow(1 - t, 3));
+                menuT.position = Vector3.Lerp(startPos, targetPos, 1 - Mathf.Pow(Mathf.Cos(0.5f * Mathf.PI * t), 2f));
             }
             else
             {
-                menuT.position = Vector3.Lerp(startPos, targetPos, Mathf.Pow(t, 3f));
+                menuT.position = Vector3.Lerp(startPos, targetPos, Mathf.Pow(Mathf.Sin(0.5f * Mathf.PI * t), 2f));
             }
             passedTime += Time.deltaTime;
             yield return null;
