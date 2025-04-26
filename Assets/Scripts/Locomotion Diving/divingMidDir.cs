@@ -84,15 +84,36 @@ public class divingMidDir : MonoBehaviour
             conSeparation = Vector3.Distance(currentLeftConPos, currentRightConPos);
             refPointPenalty = Mathf.Abs(leftDistRefPoint - rightDistRefPoint);
 
+            /* ehemals:
             // Mittlerer Vektor
             Vector3 midCons = (lCon.transform.position + rCon.transform.position) / 2;
             Vector3 underCam = neckAnchor.transform.position;
             Vector3 middleDirection = midCons - underCam;
+            Vector3 middleDirection = (lCon.transform.forward + rCon.transform.forward);
             //middleDirection.y = 0f;
             middleDirection = middleDirection.normalized;
 
             Debug.DrawLine(underCam, midCons, Color.red, 0.2f);
             Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
+            */
+
+            /* erste Idee
+            Vector3 middleDirection = (lCon.transform.forward + rCon.transform.forward);
+            //middleDirection.y = 0f;
+            middleDirection = middleDirection.normalized;
+            Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
+            */
+
+            Vector3 leftDirection = CalculateMidDir(lastLeftPosList);
+            Vector3 rightDirection = CalculateMidDir(lastRightPosList);
+            Debug.DrawRay(currentLeftConPos, leftDirection * 2, Color.red, 0.1f);
+            Debug.DrawRay(currentRightConPos, rightDirection * 2, Color.red, 0.1f);
+            //Flippen
+            leftDirection *= -1;
+            rightDirection *= -1;
+            Vector3 middleDirection = (leftDirection + rightDirection).normalized;
+            Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
+            
 
             if (leftDistRefPoint < lastLeftDistRefPoint - movementThreshold && rightDistRefPoint < lastRightDistRefPoint - movementThreshold)
             {
@@ -153,6 +174,79 @@ public class divingMidDir : MonoBehaviour
                 vibration.activeVib = false;
             }
         }
+    }
+
+    // per kleinste Quadrate (Least Squares)
+    private Vector3 CalculateMidDir(List<Vector3> posList)
+    {
+        if(posList.Count < 2)
+        {
+            return Vector3.forward;
+        }
+
+        float avgX = 0;
+        float avgY = 0;
+        float avgZ = 0;
+
+        foreach (Vector3 pos in posList)
+        {
+            avgX += pos.x;
+            avgY += pos.y;
+            avgZ += pos.z;
+        }
+        avgX /= posList.Count;
+        avgY /= posList.Count;
+        avgZ /= posList.Count;
+        Vector3 avgPosition = new Vector3(avgX, avgY, avgZ);
+
+        float sumXX = 0;
+        float sumXY = 0;
+        float sumXZ = 0;
+        float sumYY = 0;
+        float sumYZ = 0;
+        float sumZZ = 0;
+
+        // Matrix berechnen
+        foreach(Vector3 pos in posList)
+        {
+            Vector3 diff = pos - avgPosition;
+            sumXX += diff.x * diff.x;
+            sumXY += diff.x * diff.y;
+            sumXZ += diff.x * diff.z;
+            sumYY += diff.y * diff.y;
+            sumYZ += diff.y * diff.z;
+            sumZZ += diff.z * diff.z;
+        }
+
+        Matrix4x4 covarianceMatrix = new Matrix4x4(
+            new Vector4(sumXX, sumXY, sumXZ, 0),
+            new Vector4(sumXY, sumYY, sumYZ, 0),
+            new Vector4(sumXZ, sumYZ, sumZZ, 0),
+            new Vector4(0,0,0,1)
+        );
+
+        Vector3 direction = Eigenvector(covarianceMatrix);
+        Debug.Log("Dir: " + direction);
+        return direction.normalized;
+    }
+
+    // Eigenvektor berechnen
+    private static Vector3 Eigenvector(Matrix4x4 matrix, int iterations = 10)
+    {
+        // Startvektor
+        Vector3 eigenvector = Vector3.one;
+        // Iterative Methode
+        for (int i = 0; i < iterations; i++)
+        {
+            Vector3 newEigenvector = new Vector3(
+                matrix.m00 * eigenvector.x + matrix.m01 * eigenvector.y + matrix.m02 * eigenvector.z,
+                matrix.m10 * eigenvector.x + matrix.m11 * eigenvector.y + matrix.m12 * eigenvector.z,
+                matrix.m20 * eigenvector.x + matrix.m21 * eigenvector.y + matrix.m22 * eigenvector.z
+            );
+
+            eigenvector = Vector3.Normalize(newEigenvector);
+        }
+        return eigenvector;
     }
 
     private void UpdateList(List<Vector3> posList, Vector3 pos)
