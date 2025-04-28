@@ -47,7 +47,9 @@ public class divingMidDir : MonoBehaviour
     private float conSeparation;
     private float refPointPenalty;
 
+    [SerializeField]
     private List<Vector3> lastLeftPosList = new List<Vector3>();
+    [SerializeField]
     private List<Vector3> lastRightPosList = new List<Vector3>();
     private Vector3 currentLeftConLocalPos;
     private Vector3 currentRightConLocalPos;
@@ -106,13 +108,22 @@ public class divingMidDir : MonoBehaviour
 
             Vector3 leftDirection = CalculateMidDir(lastLeftPosList);
             Vector3 rightDirection = CalculateMidDir(lastRightPosList);
+            //Flippen
+            //leftDirection *= -1;
+            //rightDirection *= -1;
             Debug.DrawRay(currentLeftConPos, leftDirection * 2, Color.red, 0.1f);
             Debug.DrawRay(currentRightConPos, rightDirection * 2, Color.red, 0.1f);
-            //Flippen
-            leftDirection *= -1;
-            rightDirection *= -1;
+
+            if(lastLeftPosList.Count > 1 && lastRightPosList.Count > 1)
+            {
+                Debug.DrawRay(currentLeftConPos, (lastLeftPosList[0] - lastLeftPosList[lastLeftPosList.Count - 1]).normalized, Color.green, 0.1f);
+                Debug.DrawRay(currentRightConPos, (lastRightPosList[0] - lastRightPosList[lastLeftPosList.Count - 1]).normalized, Color.green, 0.1f);
+            }
+
+
             Vector3 middleDirection = (leftDirection + rightDirection).normalized;
             Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
+            Debug.Log("MidDir: " + middleDirection);
             
 
             if (leftDistRefPoint < lastLeftDistRefPoint - movementThreshold && rightDistRefPoint < lastRightDistRefPoint - movementThreshold)
@@ -234,7 +245,7 @@ public class divingMidDir : MonoBehaviour
     private static Vector3 Eigenvector(Matrix4x4 matrix, int iterations = 10)
     {
         // Startvektor
-        Vector3 eigenvector = Vector3.one;
+        Vector3 eigenvector = Vector3.forward;
         // Iterative Methode
         for (int i = 0; i < iterations; i++)
         {

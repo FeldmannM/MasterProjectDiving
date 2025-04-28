@@ -60,9 +60,12 @@ public class divingWithFeetMidDir : MonoBehaviour
 
             Vector3 midCons = (lCon.transform.position + rCon.transform.position) / 2;
             Vector3 underCam = neckAnchor.transform.position;
-            Vector3 middleDirection = midCons - underCam;
+            Vector3 posDirection = (midCons - underCam).normalized;
+            Vector3 rotDirection = (lCon.transform.forward + rCon.transform.forward).normalized;
+            Vector3 middleDirection = posDirection * 0.5f + rotDirection * 0.5f;
             //middleDirection.y = 0f;
             middleDirection = middleDirection.normalized;
+            Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
 
             Debug.DrawLine(underCam, midCons, Color.red, 0.2f);
             Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
