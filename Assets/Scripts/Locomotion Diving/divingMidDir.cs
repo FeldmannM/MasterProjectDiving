@@ -108,20 +108,38 @@ public class divingMidDir : MonoBehaviour
 
             Vector3 leftDirection = CalculateMidDir(lastLeftPosList);
             Vector3 rightDirection = CalculateMidDir(lastRightPosList);
-            //Flippen
-            //leftDirection *= -1;
-            //rightDirection *= -1;
-            Debug.DrawRay(currentLeftConPos, leftDirection * 2, Color.red, 0.1f);
-            Debug.DrawRay(currentRightConPos, rightDirection * 2, Color.red, 0.1f);
 
             if(lastLeftPosList.Count > 1 && lastRightPosList.Count > 1)
             {
                 Debug.DrawRay(currentLeftConPos, (lastLeftPosList[0] - lastLeftPosList[lastLeftPosList.Count - 1]).normalized, Color.green, 0.1f);
                 Debug.DrawRay(currentRightConPos, (lastRightPosList[0] - lastRightPosList[lastLeftPosList.Count - 1]).normalized, Color.green, 0.1f);
+                Vector3 expectedLeftDir = (lastLeftPosList[0] - lastLeftPosList[lastLeftPosList.Count - 1]).normalized;
+                Vector3 expectedRightDir = (lastRightPosList[0] - lastRightPosList[lastLeftPosList.Count - 1]).normalized;
+                if(Vector3.Dot(leftDirection, expectedLeftDir) < 0)
+                {
+                    leftDirection *= -1;
+                }
+                if(Vector3.Dot(rightDirection, expectedRightDir) < 0)
+                {
+                    rightDirection *= -1;
+                }
             }
+            //Flippen
+            //leftDirection *= -1;
+            //rightDirection *= -1;
+            leftDirection.y *= 0.01f;
+            rightDirection.y *= 0.01f;
+            leftDirection = leftDirection.normalized;
+            rightDirection = rightDirection.normalized;
+            Debug.DrawRay(currentLeftConPos, leftDirection * 2, Color.red, 0.1f);
+            Debug.DrawRay(currentRightConPos, rightDirection * 2, Color.red, 0.1f);
 
 
             Vector3 middleDirection = (leftDirection + rightDirection).normalized;
+            if(Vector3.Dot(middleDirection, neckAnchor.transform.forward) < 0)
+            {
+                middleDirection *= -1;
+            }
             Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
             Debug.Log("MidDir: " + middleDirection);
             

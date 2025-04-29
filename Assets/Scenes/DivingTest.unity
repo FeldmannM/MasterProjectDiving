@@ -7967,6 +7967,7 @@ MonoBehaviour:
   rightConPos: {fileID: -3326005586356538449, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   lCon: {fileID: 619149921}
   rCon: {fileID: 376099193}
+  lastRightPosList: []
 --- !u!114 &1909671310
 MonoBehaviour:
   m_ObjectHideFlags: 0
