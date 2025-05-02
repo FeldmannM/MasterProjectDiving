@@ -7957,6 +7957,8 @@ MonoBehaviour:
   locomotion: {fileID: 1909671295}
   neckAnchor: {fileID: 78744187}
   breathe: {fileID: 791931949}
+  xrOrigin: {fileID: 7696548425598651978}
+  turnManipulator: {fileID: 1226425273}
   maxSpeed: 1.5
   acceleration: 3
   deceleration: 0.75
@@ -7984,6 +7986,10 @@ MonoBehaviour:
   menu: {fileID: 608998643}
   mainCamera: {fileID: 9014170784976475920}
   locomotionBase: {fileID: 1909671295}
+  HandL: {fileID: 1910314324}
+  HandR: {fileID: 932573383}
+  DivingFinL: {fileID: 2067210578}
+  DivingFinR: {fileID: 1581790227}
   rightP:
     m_UseReference: 1
     m_Action:

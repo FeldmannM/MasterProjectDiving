@@ -12,6 +12,10 @@ public class divingMidDir : MonoBehaviour
     [SerializeField]
     private GameObject breathe;
     [SerializeField]
+    private GameObject xrOrigin;
+    [SerializeField]
+    private GameObject turnManipulator;
+    [SerializeField]
     private float maxSpeed = 1.5f;
     [SerializeField]
     private float acceleration = 5f;
@@ -109,13 +113,19 @@ public class divingMidDir : MonoBehaviour
             Vector3 leftDirection = CalculateMidDir(lastLeftPosList);
             Vector3 rightDirection = CalculateMidDir(lastRightPosList);
 
+            Quaternion turnRot = Quaternion.Euler(0, xrOrigin.transform.localEulerAngles.y, 0);
+            if (turnManipulator.transform.localEulerAngles.z != 0)
+            {
+                turnRot = Quaternion.Euler(0, turnManipulator.transform.localEulerAngles.z, 0);
+            }
+
             if(lastLeftPosList.Count > 1 && lastRightPosList.Count > 1)
             {
-                Debug.DrawRay(currentLeftConPos, (lastLeftPosList[0] - lastLeftPosList[lastLeftPosList.Count - 1]).normalized, Color.green, 0.1f);
-                Debug.DrawRay(currentRightConPos, (lastRightPosList[0] - lastRightPosList[lastLeftPosList.Count - 1]).normalized, Color.green, 0.1f);
                 Vector3 expectedLeftDir = (lastLeftPosList[0] - lastLeftPosList[lastLeftPosList.Count - 1]).normalized;
                 Vector3 expectedRightDir = (lastRightPosList[0] - lastRightPosList[lastLeftPosList.Count - 1]).normalized;
-                if(Vector3.Dot(leftDirection, expectedLeftDir) < 0)
+                Debug.DrawRay(currentLeftConPos, turnRot * expectedLeftDir, Color.green, 0.1f);
+                Debug.DrawRay(currentRightConPos, turnRot * expectedRightDir, Color.green, 0.1f);
+                if (Vector3.Dot(leftDirection, expectedLeftDir) < 0)
                 {
                     leftDirection *= -1;
                 }
@@ -129,6 +139,8 @@ public class divingMidDir : MonoBehaviour
             //rightDirection *= -1;
             leftDirection.y *= 0.01f;
             rightDirection.y *= 0.01f;
+            leftDirection = turnRot * leftDirection;
+            rightDirection = turnRot * rightDirection;
             leftDirection = leftDirection.normalized;
             rightDirection = rightDirection.normalized;
             Debug.DrawRay(currentLeftConPos, leftDirection * 2, Color.red, 0.1f);

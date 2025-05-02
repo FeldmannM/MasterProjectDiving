@@ -63,10 +63,6 @@ public class Lever : MonoBehaviour
                         divingMode.scripts[divingMode.currentIndex].enabled = false;
                         divingMode.scripts[divingMode.currentIndex - 2].enabled = true;
                         divingMode.currentIndex -= 2;
-                        HandL.SetActive(true);
-                        HandR.SetActive(true);
-                        DivingFinL.SetActive(false);
-                        DivingFinR.SetActive(false);
                     }
                 }
                 else if (DirLever)
@@ -96,11 +92,7 @@ public class Lever : MonoBehaviour
                     {
                         divingMode.scripts[divingMode.currentIndex].enabled = false;
                         divingMode.scripts[divingMode.currentIndex + 2].enabled = true;
-                        divingMode.currentIndex += 2;
-                        HandL.SetActive(false);
-                        HandR.SetActive(false);
-                        DivingFinL.SetActive(true);
-                        DivingFinR.SetActive(true);
+                        divingMode.currentIndex += 2; 
                     }
                 }
                 else if (DirLever)
@@ -114,6 +106,20 @@ public class Lever : MonoBehaviour
                 }
             }
             prevAngle = hinge.angle;
+        }
+    }
+
+    public void setMenuStatus(bool activeStatus)
+    {
+        if (!activeStatus)
+        {
+            if (divingMode.currentIndex == 2 || divingMode.currentIndex == 3)
+            {
+                HandL.SetActive(false);
+                HandR.SetActive(false);
+                DivingFinL.SetActive(true);
+                DivingFinR.SetActive(true);
+            }
         }
     }
 }

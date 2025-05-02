@@ -12,6 +12,14 @@ public class activateMenu : MonoBehaviour
     [SerializeField]
     private GameObject locomotionBase;
     [SerializeField]
+    private GameObject HandL;
+    [SerializeField]
+    private GameObject HandR;
+    [SerializeField]
+    private GameObject DivingFinL;
+    [SerializeField]
+    private GameObject DivingFinR;
+    [SerializeField]
     private InputActionProperty rightP;
     [SerializeField]
     private InputActionProperty rightGrab;
@@ -78,7 +86,13 @@ public class activateMenu : MonoBehaviour
             levers[i].SetActive(true);
             levers[i].transform.localRotation = Quaternion.Euler(leverRotations[i]);
             levers[i].GetComponent<Lever>().enabled = true;
+            levers[i].GetComponent<Lever>().setMenuStatus(true);
         }
+        // Hände immer anzeigen im Menü  
+        HandL.SetActive(true);
+        HandR.SetActive(true);
+        DivingFinL.SetActive(false);
+        DivingFinR.SetActive(false);
     }
 
     // Menü deaktivieren
@@ -87,6 +101,7 @@ public class activateMenu : MonoBehaviour
         for (int i = 0; i < leverRotations.Count; i++)
         {
             leverRotations[i] = levers[i].transform.localRotation.eulerAngles;
+            levers[i].GetComponent<Lever>().setMenuStatus(false);
             levers[i].GetComponent<Lever>().enabled = false;
             levers[i].transform.localRotation = Quaternion.Euler(new Vector3(0,180,0));
             levers[i].SetActive(false);
