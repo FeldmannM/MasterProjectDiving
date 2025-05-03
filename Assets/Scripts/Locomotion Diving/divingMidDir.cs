@@ -26,8 +26,6 @@ public class divingMidDir : MonoBehaviour
     [SerializeField]
     private float separationFactor = 0.2f;
     [SerializeField]
-    private int posListLimit = 10;
-    [SerializeField]
     private InputActionReference leftConPos;
     [SerializeField]
     private InputActionReference rightConPos;
@@ -57,6 +55,12 @@ public class divingMidDir : MonoBehaviour
     private List<Vector3> lastRightPosList = new List<Vector3>();
     private Vector3 currentLeftConLocalPos;
     private Vector3 currentRightConLocalPos;
+
+    [SerializeField]
+    private List<Vector3> leftDirList = new List<Vector3>();
+    [SerializeField]
+    private List<Vector3> rightDirList = new List<Vector3>();
+
 
     private useSensor sensor;
 
@@ -109,9 +113,14 @@ public class divingMidDir : MonoBehaviour
             middleDirection = middleDirection.normalized;
             Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
             */
+            if(currentLeftConLocalPos.magnitude > 0.00001f && currentRightConLocalPos.magnitude > 0.00001f)
+            {
+                UpdateList(leftDirList, currentLeftConLocalPos, 144);
+                UpdateList(rightDirList, currentRightConLocalPos, 144);
+            }
 
-            Vector3 leftDirection = CalculateMidDir(lastLeftPosList);
-            Vector3 rightDirection = CalculateMidDir(lastRightPosList);
+            Vector3 leftDirection = CalculateMidDir(leftDirList);
+            Vector3 rightDirection = CalculateMidDir(rightDirList);
 
             Quaternion turnRot = Quaternion.Euler(0, xrOrigin.transform.localEulerAngles.y, 0);
             if (turnManipulator.transform.localEulerAngles.z != 0)
@@ -119,10 +128,10 @@ public class divingMidDir : MonoBehaviour
                 turnRot = Quaternion.Euler(0, turnManipulator.transform.localEulerAngles.z, 0);
             }
 
-            if(lastLeftPosList.Count > 1 && lastRightPosList.Count > 1)
+            if(leftDirList.Count > 1 && rightDirList.Count > 1)
             {
-                Vector3 expectedLeftDir = (lastLeftPosList[0] - lastLeftPosList[lastLeftPosList.Count - 1]).normalized;
-                Vector3 expectedRightDir = (lastRightPosList[0] - lastRightPosList[lastLeftPosList.Count - 1]).normalized;
+                Vector3 expectedLeftDir = (leftDirList[0] - leftDirList[leftDirList.Count - 1]).normalized;
+                Vector3 expectedRightDir = (rightDirList[0] - rightDirList[leftDirList.Count - 1]).normalized;
                 Debug.DrawRay(currentLeftConPos, turnRot * expectedLeftDir, Color.green, 0.1f);
                 Debug.DrawRay(currentRightConPos, turnRot * expectedRightDir, Color.green, 0.1f);
                 if (Vector3.Dot(leftDirection, expectedLeftDir) < 0)
@@ -137,8 +146,8 @@ public class divingMidDir : MonoBehaviour
             //Flippen
             //leftDirection *= -1;
             //rightDirection *= -1;
-            leftDirection.y *= 0.01f;
-            rightDirection.y *= 0.01f;
+            leftDirection.y *= 0.1f;
+            rightDirection.y *= 0.1f;
             leftDirection = turnRot * leftDirection;
             rightDirection = turnRot * rightDirection;
             leftDirection = leftDirection.normalized;
@@ -170,8 +179,8 @@ public class divingMidDir : MonoBehaviour
                 {
                     currentSpeed -= 5f * deceleration * Time.deltaTime;
                 }
-                UpdateList(lastLeftPosList, currentLeftConLocalPos);
-                UpdateList(lastRightPosList, currentRightConLocalPos);
+                UpdateList(lastLeftPosList, currentLeftConLocalPos, 10);
+                UpdateList(lastRightPosList, currentRightConLocalPos, 10);
 
                 currentSpeed = Mathf.Clamp(currentSpeed, 0f, maxSpeed);
 
@@ -187,6 +196,9 @@ public class divingMidDir : MonoBehaviour
                 Vector3 movement = middleDirection * currentSpeed * Time.deltaTime;
                 locomotion.transform.position += movement;
                 sensor.currentLocomotionState = 1;
+
+                leftDirList = new List<Vector3> { leftDirList[leftDirList.Count - 2], leftDirList[leftDirList.Count - 1] };
+                rightDirList = new List<Vector3> { rightDirList[rightDirList.Count - 2], rightDirList[rightDirList.Count - 1] };
             }
             else
             {
@@ -290,7 +302,7 @@ public class divingMidDir : MonoBehaviour
         return eigenvector;
     }
 
-    private void UpdateList(List<Vector3> posList, Vector3 pos)
+    private void UpdateList(List<Vector3> posList, Vector3 pos, int posListLimit)
     {
         posList.Add(pos);
         if (posList.Count > posListLimit)
