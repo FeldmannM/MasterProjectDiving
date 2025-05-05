@@ -2,8 +2,8 @@
 MasterProjectDiving
 
 Right controller:
-Button A: Change upside down
-Button B: Change swim mode
+Button A: Activate the menu to change the diving modes
+Button B: Activate the RotationAmplifier
 Left controller:
 Button X: Swim downwards
 Button Y: Swim upwards
