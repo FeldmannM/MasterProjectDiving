@@ -122,13 +122,17 @@ public class divingMidDir : MonoBehaviour
             Vector3 leftDirection = CalculateMidDir(leftDirList);
             Vector3 rightDirection = CalculateMidDir(rightDirList);
 
+            // Snap Turn Drehung
             Quaternion turnRot = Quaternion.Euler(0, xrOrigin.transform.localEulerAngles.y, 0);
             if (turnManipulator.transform.localEulerAngles.z != 0)
             {
-                turnRot = Quaternion.Euler(0, turnManipulator.transform.localEulerAngles.z, 0);
+                turnRot = Quaternion.Euler(0, 0, turnManipulator.transform.localEulerAngles.z);
             }
+            // Sitzend/Liegend
+            turnRot = locomotion.transform.localRotation * turnRot;
+            Debug.DrawRay(locomotion.transform.position, turnRot * Vector3.up, Color.yellow, 0.2f);
 
-            if(leftDirList.Count > 1 && rightDirList.Count > 1)
+            if (leftDirList.Count > 1 && rightDirList.Count > 1)
             {
                 Vector3 expectedLeftDir = (leftDirList[0] - leftDirList[leftDirList.Count - 1]).normalized;
                 Vector3 expectedRightDir = (rightDirList[0] - rightDirList[leftDirList.Count - 1]).normalized;
@@ -146,10 +150,10 @@ public class divingMidDir : MonoBehaviour
             //Flippen
             //leftDirection *= -1;
             //rightDirection *= -1;
-            leftDirection.y *= 0.1f;
-            rightDirection.y *= 0.1f;
             leftDirection = turnRot * leftDirection;
             rightDirection = turnRot * rightDirection;
+            leftDirection.y *= 0.1f;
+            rightDirection.y *= 0.1f;
             leftDirection = leftDirection.normalized;
             rightDirection = rightDirection.normalized;
             Debug.DrawRay(currentLeftConPos, leftDirection * 2, Color.red, 0.1f);

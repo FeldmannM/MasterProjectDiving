@@ -7964,13 +7964,14 @@ MonoBehaviour:
   deceleration: 0.75
   movementThreshold: 0.001
   separationFactor: 0.2
-  posListLimit: 10
   leftConPos: {fileID: -2024308242397127297, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightConPos: {fileID: -3326005586356538449, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   lCon: {fileID: 619149921}
   rCon: {fileID: 376099193}
   lastLeftPosList: []
   lastRightPosList: []
+  leftDirList: []
+  rightDirList: []
 --- !u!114 &1909671310
 MonoBehaviour:
   m_ObjectHideFlags: 0
