@@ -60,7 +60,7 @@ public class divingMidDir : MonoBehaviour
     private List<Vector3> leftDirList = new List<Vector3>();
     [SerializeField]
     private List<Vector3> rightDirList = new List<Vector3>();
-
+    private Vector3 oldMidDir;
 
     private useSensor sensor;
 
@@ -161,10 +161,21 @@ public class divingMidDir : MonoBehaviour
 
 
             Vector3 middleDirection = (leftDirection + rightDirection).normalized;
+            
             if(Vector3.Dot(middleDirection, neckAnchor.transform.forward) < 0)
             {
+                //middleDirection.x *= -1;
+                //middleDirection.z *= -1;
                 middleDirection *= -1;
             }
+            
+            // Lerpen damit die Bewegung flüssiger ist
+            if(oldMidDir != null)
+            {
+                middleDirection = Vector3.Lerp(oldMidDir, middleDirection, 4 * Time.deltaTime).normalized;
+            }
+            oldMidDir = middleDirection;
+
             Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
             Debug.Log("MidDir: " + middleDirection);
             
