@@ -16,6 +16,8 @@ public class divingMidDir : MonoBehaviour
     [SerializeField]
     private GameObject turnManipulator;
     [SerializeField]
+    private GameObject RotationAmplifier;
+    [SerializeField]
     private float maxSpeed = 1.5f;
     [SerializeField]
     private float acceleration = 5f;
@@ -48,6 +50,11 @@ public class divingMidDir : MonoBehaviour
     private float rightDistRefPoint;
     private float conSeparation;
     private float refPointPenalty;
+
+    private Vector3 leftDirection;
+    private Vector3 rightDirection;
+    private Vector3 lastLeftDir;
+    private Vector3 lastRightDir;
 
     [SerializeField]
     private List<Vector3> lastLeftPosList = new List<Vector3>();
@@ -119,8 +126,8 @@ public class divingMidDir : MonoBehaviour
                 UpdateList(rightDirList, currentRightConLocalPos, 144);
             }
 
-            Vector3 leftDirection = CalculateMidDir(leftDirList);
-            Vector3 rightDirection = CalculateMidDir(rightDirList);
+            leftDirection = CalculateMidDir(leftDirList);
+            rightDirection = CalculateMidDir(rightDirList);
 
             // Snap Turn Drehung
             Quaternion turnRot = Quaternion.Euler(0, xrOrigin.transform.localEulerAngles.y, 0);
@@ -129,7 +136,7 @@ public class divingMidDir : MonoBehaviour
                 turnRot = Quaternion.Euler(0, 0, turnManipulator.transform.localEulerAngles.z);
             }
             // Sitzend/Liegend
-            turnRot = locomotion.transform.localRotation * turnRot;
+            turnRot = locomotion.transform.localRotation * turnRot * RotationAmplifier.transform.localRotation;
             Debug.DrawRay(locomotion.transform.position, turnRot * Vector3.up, Color.yellow, 0.2f);
 
             if (leftDirList.Count > 1 && rightDirList.Count > 1)
@@ -147,13 +154,20 @@ public class divingMidDir : MonoBehaviour
                     rightDirection *= -1;
                 }
             }
+            else if(lastLeftDir != null && lastRightDir != null) {
+                leftDirection = lastLeftDir;
+                rightDirection = lastRightDir;
+            }
+            lastLeftDir = leftDirection;
+            lastRightDir = rightDirection;
+
             //Flippen
             //leftDirection *= -1;
             //rightDirection *= -1;
             leftDirection = turnRot * leftDirection;
             rightDirection = turnRot * rightDirection;
-            leftDirection.y *= 0.1f;
-            rightDirection.y *= 0.1f;
+            leftDirection.y *= 0.25f;
+            rightDirection.y *= 0.25f;
             leftDirection = leftDirection.normalized;
             rightDirection = rightDirection.normalized;
             Debug.DrawRay(currentLeftConPos, leftDirection * 2, Color.red, 0.1f);
@@ -164,9 +178,9 @@ public class divingMidDir : MonoBehaviour
             
             if(Vector3.Dot(middleDirection, neckAnchor.transform.forward) < 0)
             {
-                //middleDirection.x *= -1;
-                //middleDirection.z *= -1;
-                middleDirection *= -1;
+                middleDirection.x *= -1;
+                middleDirection.z *= -1;
+                //middleDirection *= -1;
             }
             
             // Lerpen damit die Bewegung flüssiger ist
@@ -214,6 +228,8 @@ public class divingMidDir : MonoBehaviour
 
                 leftDirList = new List<Vector3> { leftDirList[leftDirList.Count - 2], leftDirList[leftDirList.Count - 1] };
                 rightDirList = new List<Vector3> { rightDirList[rightDirList.Count - 2], rightDirList[rightDirList.Count - 1] };
+                //leftDirList = new List<Vector3> { leftDirList[leftDirList.Count - 2], leftDirList[leftDirList.Count - 1] };
+                //rightDirList = new List<Vector3> { rightDirList[rightDirList.Count - 2], rightDirList[rightDirList.Count - 1] };
             }
             else
             {

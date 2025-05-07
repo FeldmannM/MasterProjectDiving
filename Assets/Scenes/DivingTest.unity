@@ -7959,6 +7959,7 @@ MonoBehaviour:
   breathe: {fileID: 791931949}
   xrOrigin: {fileID: 7696548425598651978}
   turnManipulator: {fileID: 1226425273}
+  RotationAmplifier: {fileID: 218337660}
   maxSpeed: 1.5
   acceleration: 3
   deceleration: 0.75
