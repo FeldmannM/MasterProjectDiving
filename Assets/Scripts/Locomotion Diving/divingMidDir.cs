@@ -226,10 +226,10 @@ public class divingMidDir : MonoBehaviour
                 locomotion.transform.position += movement;
                 sensor.currentLocomotionState = 1;
 
+                //leftDirList = new List<Vector3>();
+                //rightDirList = new List<Vector3>();
                 leftDirList = new List<Vector3> { leftDirList[leftDirList.Count - 2], leftDirList[leftDirList.Count - 1] };
                 rightDirList = new List<Vector3> { rightDirList[rightDirList.Count - 2], rightDirList[rightDirList.Count - 1] };
-                //leftDirList = new List<Vector3> { leftDirList[leftDirList.Count - 2], leftDirList[leftDirList.Count - 1] };
-                //rightDirList = new List<Vector3> { rightDirList[rightDirList.Count - 2], rightDirList[rightDirList.Count - 1] };
             }
             else
             {
