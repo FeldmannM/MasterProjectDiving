@@ -182,6 +182,14 @@ public class divingMidDir : MonoBehaviour
                 middleDirection.z *= -1;
                 //middleDirection *= -1;
             }
+            if(middleDirection.y < 0)
+            {
+                middleDirection.y *= 1.05f;
+            }
+            else
+            {
+                middleDirection.y *= 0.95f;
+            }
             
             // Lerpen damit die Bewegung flüssiger ist
             if(oldMidDir != null)
