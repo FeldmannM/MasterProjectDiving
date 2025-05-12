@@ -24,12 +24,14 @@ public class sensorParticles : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // eingelesener Sensorwert für Anzahl der Partikel verarbeiten
         //particles.Play();
         factor = sValue * 40;
         factor = Mathf.Clamp(factor, 0.01f, 40);
         //Debug.Log("Breathe Factor: " + factor);
         emission.rateOverTime = factor;
 
+        // Bei einigen Luftblassen Sound abspielen
         if (factor > 5 && !audioS.isPlaying)
         {
             audioS.time = 0.2f;
@@ -39,6 +41,7 @@ public class sensorParticles : MonoBehaviour
         {
             audioS.Stop();
         }
+        // Partikel über die Zeit verringern
         sValue -= Time.deltaTime*0.75f;
         sValue = Mathf.Max(sValue, 0f);
 

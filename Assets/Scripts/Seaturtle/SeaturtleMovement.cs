@@ -21,6 +21,7 @@ public class SeaturtleMovement : MonoBehaviour
         StartCoroutine(ForwardMoveStart());
     }
 
+    // Schildkröte in Bahnen schwimmen lassen
     private void Update()
     {   
         turtle.transform.position += turtle.transform.right * (speed * Time.deltaTime);
@@ -31,11 +32,13 @@ public class SeaturtleMovement : MonoBehaviour
         }
         _angle = turnspeed * speed * Time.deltaTime;
 
+        // nach rechts drehen
         if (_turnRight)
         {
             turtle.transform.Rotate(Vector3.up, _angle);
             //turtle.transform.rotation = Quaternion.RotateTowards(turtle.transform.rotation, Quaternion.Euler(0, 180, 0), angle);
         }
+        // nach links drehen
         else
         {
             turtle.transform.Rotate(Vector3.up, -_angle);
@@ -59,6 +62,7 @@ public class SeaturtleMovement : MonoBehaviour
         _pause = false;
         _turnRight = !_turnRight;
     }
+    // nach vorne schwimmen
     IEnumerator ForwardMove()
     {
         yield return new WaitForSeconds(2*_forwardTime);

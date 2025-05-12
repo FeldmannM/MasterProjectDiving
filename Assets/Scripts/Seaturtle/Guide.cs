@@ -16,10 +16,12 @@ public class Guide : MonoBehaviour
     private int index = 0;
     private bool isRotating = false;
 
+    // Schildkröte gibt den Weg durch die Ringe bis zum Tunnel vor, damit der Nutzer eine Orientierung bekommt.
+
     // Update is called once per frame
     void Update()
     {
-        // fluessige Bewegung
+        // fluessige Bewegung in Richtung des nächstem Tors
         if(index < goals.Count)
         {
             Vector3 direction = (goals[index] - turtle.transform.position).normalized;
@@ -37,6 +39,7 @@ public class Guide : MonoBehaviour
                 }
             }
 
+            // zum nächsten Tor langsam schauen
             if (!isRotating)
             {
                 Quaternion rot = Quaternion.LookRotation(direction);

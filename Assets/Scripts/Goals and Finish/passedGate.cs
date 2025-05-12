@@ -8,6 +8,7 @@ public class passedGate : MonoBehaviour
     private GameObject gate;
     private Color colorGreen = Color.green;
 
+    // Tor durchquert
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.layer == gate.layer)
@@ -17,6 +18,7 @@ public class passedGate : MonoBehaviour
         Debug.Log("Hit");
     }
 
+    // Farbe des Tors auf Grün ändern beim Durchqueren
     private void ChangeColor()
     {
         for(int i = 0; i < 4; i++)

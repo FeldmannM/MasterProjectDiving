@@ -14,12 +14,15 @@ public class useMic : MonoBehaviour
         MicToAudio();
     }
     
+    // Mikrofon aufnehmen und als Audio-Datei speichern
     public void MicToAudio()
     {
         string micName = Microphone.devices[0];
         Debug.Log(micName);
         micAudio = Microphone.Start(micName, true, 10, AudioSettings.outputSampleRate);
     }
+
+    // Lautstärke aus der Audio-Datei extrahieren
     public float getLoudness()
     {
         int startPos = Microphone.GetPosition(Microphone.devices[0]) - window;

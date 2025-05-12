@@ -25,6 +25,7 @@ public class sensorPlot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Plot initalisieren (Gerade)
         for (int i = 0; i < maxSize; i++)
         {
             points.Add(new Vector3((i / (float)maxSize) * graphWidth + xpos, ypos, zpos));
@@ -38,12 +39,15 @@ public class sensorPlot : MonoBehaviour
     {
         //float sensorValue = sensor.sensorValue;
 
+        // Jeden Punkt um eins nach links schieben
         for (int i = 0; i < points.Count; i++)
         {
             points[i] = new Vector3(points[i].x - (graphWidth / (float)maxSize), points[i].y, points[i].z);
         }
 
+        // Neuer Sensorwert als Punkt am rechten Ende hinzufügen
         points.Add(new Vector3(graphWidth + xpos, sensorValue + ypos, zpos));
+        // ältester Punkt entfernen
         if(points.Count >= maxSize)
         {
             points.RemoveAt(0);
@@ -52,6 +56,7 @@ public class sensorPlot : MonoBehaviour
         lineRenderer.SetPositions(points.ToArray());
     }
 
+    // aktuellen Sensorwert setzen
     public void setSensorValue(float value)
     {
         sensorValue = value;

@@ -8,6 +8,7 @@ public class passedRing : MonoBehaviour
     private GameObject ring;
     private Color colorGreen = Color.green;
 
+    // Ring durchquert
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == ring.layer)
@@ -18,7 +19,7 @@ public class passedRing : MonoBehaviour
     }
 
 
-
+    // Farbe des Rings und seiner Befestigung auf Grün ändern beim Durchqueren
     private void ChangeColor()
     {
         for (int i = 0; i < 2; i++)
@@ -27,6 +28,7 @@ public class passedRing : MonoBehaviour
             if(!renderer.material.color.Equals(colorGreen))
             {
                 renderer.material.color = colorGreen;
+                // Ring als passiert markieren fürs Zielüberwachungs-Skript
                 if(i == 0)
                 {
                     GameObject.Find("Goals").GetComponent<finishParkour>().addGoal();

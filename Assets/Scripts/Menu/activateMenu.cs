@@ -147,6 +147,8 @@ public class activateMenu : MonoBehaviour
         }
         activeCoroutine = StartCoroutine(RecalculatePos(newRot, newLeverPos));
     }
+
+    // Bei Veränderungen Position des Menüs neu berechnen
     IEnumerator RecalculatePos(Quaternion newRot, int newLeverPos)
     {
         isMoving = true;

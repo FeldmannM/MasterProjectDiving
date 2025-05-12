@@ -15,18 +15,21 @@ public class finishParkour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Anzahl der Tore zum Durchtauchen
         childCount = transform.childCount;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Alle Tore durchtaucht
         if(passedGoals == childCount)
         {
             finish.SetActive(true);
             finish.transform.position = locomotion.transform.position;
         }
     }
+    // wenn ein Tor durchquert Zähler erhöhen
     public void addGoal()
     {
         passedGoals += 1;

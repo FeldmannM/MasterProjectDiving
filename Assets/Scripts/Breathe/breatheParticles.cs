@@ -27,9 +27,11 @@ public class breatheParticles : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Mikrofon Lautstärke verwenden
         loudness = mic.getLoudness();
         //particles.Play();
         factor = loudness * 1500;
+        // sonst Sinuskurven-Atmung
         breatheCurve = Mathf.Abs(Mathf.Sin((Mathf.PI / freqTime) * passedTime));
         if (breatheCurve > 0.9f)
         {
@@ -40,9 +42,12 @@ public class breatheParticles : MonoBehaviour
         {
             factor = Mathf.Clamp(factor, 0.01f, 40);
         }
+
+        // Partikel anzeigen
         //Debug.Log("Breathe Factor: " + factor);
         emission.rateOverTime = factor;
 
+        // Bei einigen Luftblassen Sound abspielen
         if (factor > 5 && !audioS.isPlaying)
         {
             audioS.time = 0.2f;

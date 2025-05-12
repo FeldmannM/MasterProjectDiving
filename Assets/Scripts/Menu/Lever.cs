@@ -44,12 +44,15 @@ public class Lever : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // bei Positionsänderung eines Hebels
         if((Mathf.Abs(hinge.angle - prevAngle) > 0.001f) && hinge.angle != 0)
         {
             if(hinge.angle < 0)
             {
+                // Stehen/Liegen
                 if (PosLever)
                 {
+                    // Stehend
                     if(prevAngle > 0)
                     {
                         Quaternion newRot = Quaternion.Euler(0f, 0f, 0f);
@@ -57,6 +60,7 @@ public class Lever : MonoBehaviour
                         locomotionBase.GetComponent<activateMenu>().recalculateMenuPos(newRot, 0);
                     }
                 }
+                // Hände/Füße
                 else if (MethodLever){
                     if(divingMode.currentIndex == 2 || divingMode.currentIndex == 3)
                     {   
@@ -65,6 +69,7 @@ public class Lever : MonoBehaviour
                         divingMode.currentIndex -= 2;
                     }
                 }
+                // Kamerarichtung / Controllerrichtung
                 else if (DirLever)
                 {
                     if (divingMode.currentIndex == 1 || divingMode.currentIndex == 3)
@@ -77,8 +82,10 @@ public class Lever : MonoBehaviour
             }
             else
             {
+                // Stehen/Liegen
                 if (PosLever)
                 {
+                    // Liegend
                     if (prevAngle < 0)
                     {
                         Quaternion newRot = Quaternion.Euler(90f, 0f, 0f);
@@ -86,6 +93,7 @@ public class Lever : MonoBehaviour
                         locomotionBase.GetComponent<activateMenu>().recalculateMenuPos(newRot, 1);
                     }
                 }
+                // Hände/Füße
                 else if (MethodLever)
                 {
                     if (divingMode.currentIndex == 0 || divingMode.currentIndex == 1)
@@ -95,6 +103,7 @@ public class Lever : MonoBehaviour
                         divingMode.currentIndex += 2; 
                     }
                 }
+                // Kamerarichtung / Controllerrichtung
                 else if (DirLever)
                 {
                     if (divingMode.currentIndex == 0 || divingMode.currentIndex == 2)
@@ -109,6 +118,7 @@ public class Lever : MonoBehaviour
         }
     }
 
+    // Falls ein Mode mit Flossen aktiviert und das Menü geschlossen wurde Flossen anzeigen anstelle der Hände
     public void setMenuStatus(bool activeStatus)
     {
         if (!activeStatus)

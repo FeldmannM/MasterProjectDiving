@@ -10,12 +10,14 @@ public class moveUPJellyfish : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // zufällige Geschwindigkeit
         speed = Random.Range(0.25f, 0.75f);
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Qualle steigt über eine gewisse Zeit nach oben bevor sie verschwindet
         if(passedTime < maxTime)
         {
             transform.position += Vector3.up * speed * Time.deltaTime;
