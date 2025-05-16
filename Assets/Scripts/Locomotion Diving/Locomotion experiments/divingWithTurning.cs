@@ -52,11 +52,13 @@ public class divingWithTurning : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        // Idee Tauchen in Kamera Richtung mit der Möglichkeit sich auf der Stelle zu drehen bzw. einen Bogen zu schwimmen
         if (leftConPos != null && rightConPos != null)
         {
             currentLeftConPos = leftConPos.action.ReadValue<Vector3>();
             currentRightConPos = rightConPos.action.ReadValue<Vector3>();
 
+            // In Kamera Richtung nach Vorne beschleunigen
             if (currentLeftConPos.z < lastLeftConPos.z - movementThreshold && currentRightConPos.z < lastRightConPos.z - movementThreshold)
             {
                 currentSpeed += acceleration * Time.deltaTime;
@@ -66,6 +68,7 @@ public class divingWithTurning : MonoBehaviour
                 Vector3 movement = forwardDirection * currentSpeed * Time.deltaTime;
                 locomotion.transform.position += movement;
             }
+            // abbremsen
             else
             {
                 currentSpeed -= deceleration * Time.deltaTime;
@@ -76,7 +79,7 @@ public class divingWithTurning : MonoBehaviour
                 locomotion.transform.position += movement;
             }
 
-
+            // Drehung
             if (currentLeftConPos.x < lastLeftConPos.x - turnThreshold && currentRightConPos.x < lastRightConPos.x - turnThreshold)
             {
                 turnSpeed += turnFactorAc * Time.deltaTime;
@@ -87,6 +90,7 @@ public class divingWithTurning : MonoBehaviour
                 turnSpeed -= turnFactorAc * Time.deltaTime;
                 locomotion.transform.Rotate(Vector3.up, turnSpeed * Time.deltaTime);
             }
+            // abbremsen je nach Drehrichtung
             else
             {
                 if (turnSpeed > 0)
@@ -107,7 +111,7 @@ public class divingWithTurning : MonoBehaviour
             lastLeftConPos = currentLeftConPos;
             lastRightConPos = currentRightConPos;
             Debug.Log(currentSpeed + ", " + turnSpeed);
-
+            // Bei gewisser Geschwindigkeit Controller vibrieren lassen
             float bIntensity = 0;
             if (currentSpeed > 0)
             {

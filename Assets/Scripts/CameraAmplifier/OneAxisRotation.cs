@@ -26,8 +26,10 @@ public class OneAxisRotation : MonoBehaviour
     private float rotAmplifier = 1.5f;
 
 
+    // Rotation nur über eine Achse
     void LateUpdate()
     {
+        // Wenn man auf dem Rücken liegt
         if (Mathf.Abs(locomotionBase.transform.localRotation.eulerAngles.x - 90f) < 1f)
         {
             Debug.Log("Liegend");
@@ -42,11 +44,14 @@ public class OneAxisRotation : MonoBehaviour
             forwardCam.Normalize();
             Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * 5f, Color.green, 0.1f);
             Debug.DrawRay(refPoint.transform.position, refPoint.transform.forward * 5f, Color.yellow, 0.1f);
+            // Berechne den Winkel der aktuellen Drehung
             float angleY = - Vector3.SignedAngle(forwardRefPoint, forwardCam, Vector3.up);
             Debug.Log("Angle: " + angleY);
             float amplifiedY = (rotAmplifier - 1) * angleY;
+            // Wende den Amplifier an (mit Quaternions damit kein Gimbal Lock entstehen kann)
             rotationAnchor.transform.rotation *= Quaternion.AngleAxis(amplifiedY, Vector3.forward);
         }
+        // Wenn man sitzt
         else
         {
             Debug.Log("Sitzend");
@@ -61,9 +66,11 @@ public class OneAxisRotation : MonoBehaviour
             forwardCam.Normalize();
             Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * 5f, Color.green, 0.1f);
             Debug.DrawRay(refPoint.transform.position, refPoint.transform.forward * 5f, Color.yellow, 0.1f);
+            // Berechne den Winkel der aktuellen Drehung
             float angleY = Vector3.SignedAngle(forwardRefPoint,forwardCam, Vector3.up);
             Debug.Log("Angle: " + angleY);
             float amplifiedY = (rotAmplifier - 1) * angleY;
+            // Wende den Amplifier an (mit Quaternions damit kein Gimbal Lock entstehen kann)
             rotationAnchor.transform.rotation *= Quaternion.AngleAxis(amplifiedY, Vector3.up);
         }
     }

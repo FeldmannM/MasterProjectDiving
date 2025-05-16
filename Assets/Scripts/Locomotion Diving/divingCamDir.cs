@@ -86,7 +86,7 @@ public class divingCamDir : MonoBehaviour
             conSeparation = Vector3.Distance(currentLeftConPos, currentRightConPos);
             refPointPenalty = Mathf.Abs(leftDistRefPoint - rightDistRefPoint);
             
-
+            // Falls sich der Abstand beider Controller zum Nutzer verringert: Beschleunigungs-Phase
             if(leftDistRefPoint < lastLeftDistRefPoint - movementThreshold && rightDistRefPoint < lastRightDistRefPoint - movementThreshold)
             {
                 float effectiveSeparation = conSeparation - refPointPenalty;
@@ -112,7 +112,8 @@ public class divingCamDir : MonoBehaviour
 
                 sensor.currentLocomotionState = 2;
             }
-            else if(leftDistRefPoint > lastLeftDistRefPoint + movementThreshold && rightDistRefPoint > lastRightDistRefPoint + movementThreshold)
+            // Falls sich der Abstand beider Controller zum Nutzer vergrößert: Vorbereitungs-Phase mit Abbremsen
+            else if (leftDistRefPoint > lastLeftDistRefPoint + movementThreshold && rightDistRefPoint > lastRightDistRefPoint + movementThreshold)
             {
                 currentSpeed -= deceleration * Time.deltaTime;
                 currentSpeed = Mathf.Max(currentSpeed, 0f);
@@ -122,6 +123,7 @@ public class divingCamDir : MonoBehaviour
                 locomotion.transform.position += movement;
                 sensor.currentLocomotionState = 1;
             }
+            // Sonst: Abbremsen
 			else
             {
 				currentSpeed -= deceleration * Time.deltaTime;
@@ -139,6 +141,7 @@ public class divingCamDir : MonoBehaviour
             lastRightDistRefPoint = rightDistRefPoint;
             //Debug.Log("Speed: " + currentSpeed);
 
+            // Bei gewisser Geschwindigkeit Controller vibrieren lassen
             float bIntensity = Mathf.Abs((currentSpeed / maxSpeed) * 0.25f);
             if (bIntensity > 0.025f)
             {
@@ -151,7 +154,7 @@ public class divingCamDir : MonoBehaviour
             }
         }
     }
-
+    // Liste der letzten gespeicherten Positionen
     private void UpdateList(List<Vector3> posList, Vector3 pos)
     {
         posList.Add(pos);
@@ -160,6 +163,7 @@ public class divingCamDir : MonoBehaviour
             posList.RemoveAt(0);
         }
     }
+    // Liste für den letzten Bewegungsraum
     private bool IsPosNearPosInList(List<Vector3> posList, Vector3 currentPos, float threshold)
     {
         foreach (Vector3 pos in posList)

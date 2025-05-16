@@ -21,7 +21,7 @@ public class RotationAmplifier : MonoBehaviour
         initRARot = rotationAnchor.transform.localRotation;
     }
 
-    // waiting for tracking
+    // Warte aufs Tracking, war ein weiterer Versuch über Quaternions die Rotation an kritischen Stellen wie exakte 90 Grad Drehungen zu berechnen.
     void LateUpdate()
     {
         Quaternion currentCamRot = mainCamera.transform.localRotation;

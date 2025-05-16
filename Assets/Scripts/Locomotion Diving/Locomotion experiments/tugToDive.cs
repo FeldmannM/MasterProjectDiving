@@ -37,6 +37,7 @@ public class tugToDive : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Idee Tauchen in dem man sich an die Stelle wo man hingreift heranziehen kann
         if (leftConPos != null && rightConPos != null)
         {
             currentLeftConPos = locomotion.transform.TransformPoint(leftConPos.action.ReadValue<Vector3>());
@@ -60,16 +61,19 @@ public class tugToDive : MonoBehaviour
                 initalLeftConPos = locomotion.transform.TransformPoint(leftConPos.action.ReadValue<Vector3>());
             }
 
+            // Richtung zwischen den Positionen beider Controller
             if (leftGrip.action.IsPressed() && rightGrip.action.IsPressed())
             {
                 Vector3 averageDir = (initalLeftConPos - currentLeftConPos + initalRightConPos - currentRightConPos) / 2;
                 locomotion.transform.position += averageDir;
             }
+            // Nur in Richtung des linken Controllers
             else if (leftGrip.action.IsPressed())
             {
                 Vector3 leftDir = initalLeftConPos - currentLeftConPos;
                 locomotion.transform.position += leftDir;
             }
+            // Nur in Richtung des rechten Controllers
             else if (rightGrip.action.IsPressed())
             {
                 Vector3 rightDir = initalRightConPos - currentRightConPos;

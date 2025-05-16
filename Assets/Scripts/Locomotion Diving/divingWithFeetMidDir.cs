@@ -61,6 +61,7 @@ public class divingWithFeetMidDir : MonoBehaviour
             Vector3 midCons = (lCon.transform.position + rCon.transform.position) / 2;
             Vector3 underCam = neckAnchor.transform.position;
             Vector3 posDirection = (midCons - underCam).normalized;
+            // Orientierung der Controller zur Position mit einbeziehen
             Vector3 rotDirection = (lCon.transform.forward + rCon.transform.forward).normalized;
             Vector3 middleDirection = posDirection * 0.25f + rotDirection * 0.75f;
             //middleDirection.y = 0f;
@@ -70,6 +71,7 @@ public class divingWithFeetMidDir : MonoBehaviour
             Debug.DrawLine(underCam, midCons, Color.red, 0.2f);
             Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
 
+            // Auf und Ab Bewegungen mit beiden Controllern
             if ((currentLeftConPos.y < lastLeftConPos.y - movementThreshold && currentRightConPos.y < lastRightConPos.y - movementThreshold)
                 || (currentLeftConPos.y < lastLeftConPos.y - movementThreshold && currentRightConPos.y > lastRightConPos.y + movementThreshold)
                 || (currentLeftConPos.y > lastLeftConPos.y + movementThreshold && currentRightConPos.y < lastRightConPos.y - movementThreshold))
@@ -80,6 +82,7 @@ public class divingWithFeetMidDir : MonoBehaviour
                 Vector3 movement = middleDirection * currentSpeed * Time.deltaTime;
                 locomotion.transform.position += movement;
             }
+            // Sonst: Abbremsen
             else
             {
                 currentSpeed -= deceleration * Time.deltaTime;
@@ -95,6 +98,7 @@ public class divingWithFeetMidDir : MonoBehaviour
             lastRightConPos = currentRightConPos;
             //Debug.Log(currentSpeed);
 
+            // Bei gewisser Geschwindigkeit Controller vibrieren lassen
             float bIntensity = Mathf.Abs((currentSpeed / maxSpeed) * 0.25f);
             if (bIntensity > 0.025f)
             {

@@ -53,7 +53,7 @@ public class divingWithFeetCamDir : MonoBehaviour
         {
             currentLeftConPos = locomotion.transform.rotation * leftConPos.action.ReadValue<Vector3>();
             currentRightConPos = locomotion.transform.rotation * rightConPos.action.ReadValue<Vector3>();
-
+            // Auf und Ab Bewegungen mit beiden Controllern
             if ((currentLeftConPos.y < lastLeftConPos.y - movementThreshold && currentRightConPos.y < lastRightConPos.y - movementThreshold) 
                 || (currentLeftConPos.y < lastLeftConPos.y - movementThreshold && currentRightConPos.y > lastRightConPos.y + movementThreshold)
                 || (currentLeftConPos.y > lastLeftConPos.y + movementThreshold && currentRightConPos.y < lastRightConPos.y - movementThreshold))
@@ -65,6 +65,7 @@ public class divingWithFeetCamDir : MonoBehaviour
                 Vector3 movement = forwardDirection * currentSpeed * Time.deltaTime;
                 locomotion.transform.position += movement;
             }
+            // Sonst: Abbremsen
             else
             {
                 currentSpeed -= deceleration * Time.deltaTime;
@@ -81,6 +82,7 @@ public class divingWithFeetCamDir : MonoBehaviour
             lastRightConPos = currentRightConPos;
             //Debug.Log(currentSpeed);
 
+            // Bei gewisser Geschwindigkeit Controller vibrieren lassen
             float bIntensity = Mathf.Abs((currentSpeed / maxSpeed) * 0.25f);
             if (bIntensity > 0.025f)
             {

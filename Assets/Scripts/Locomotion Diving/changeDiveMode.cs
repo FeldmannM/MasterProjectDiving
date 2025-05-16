@@ -11,6 +11,7 @@ public class changeDiveMode : MonoBehaviour
     private InputActionProperty rightS;
     [SerializeField]
     private GameObject locomotionBase;
+    // Tauchmodi als Liste
     [SerializeField]
     public List<MonoBehaviour> scripts;
     [SerializeField]
@@ -23,6 +24,7 @@ public class changeDiveMode : MonoBehaviour
     private GameObject DivingFinR;
     public int currentIndex = 0;
 
+    // mögliche Rotationsliste 0: Sitzen 90: Liegen
     //private List<float> rotations = new List<float> { 0f, 90f, 180f, 270f };
     private List<float> rotations = new List<float> { 0f, 90f };
     private int rotIndex = 0;
@@ -37,7 +39,8 @@ public class changeDiveMode : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /* deprecated
+        // Iteriere durch die Liste der Sitz/Liege-Positionen und der Tauchmodi bei Betätigung der entsprechenden Taste
+        /* deprecated (wegen dem Menü mit den Hebeln wird dieser Code nicht mehr benötigt)
         if (rightP.action.WasPerformedThisFrame())
         {
             rotIndex = (rotIndex + 1) % rotations.Count;

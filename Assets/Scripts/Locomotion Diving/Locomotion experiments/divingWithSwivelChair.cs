@@ -44,7 +44,8 @@ public class divingWithSwivelChair : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(leftConPos != null && rightConPos != null)
+        // Idee Tauchen während man sich auf einem Drehstuhl befindet, sodass die Dregung im Wasser über den physischen Stuhl erfolgen kann
+        if (leftConPos != null && rightConPos != null)
         {
             currentLeftConPos = leftConPos.action.ReadValue<Vector3>();
             currentRightConPos = rightConPos.action.ReadValue<Vector3>();
@@ -56,6 +57,7 @@ public class divingWithSwivelChair : MonoBehaviour
             float movementMagnitudeLeft = Vector3.Dot(movementLeft, forwardDirection);
             float movementMagnitudeRight = Vector3.Dot(movementRight, forwardDirection);
 
+            // Beschleunigung
             if (movementMagnitudeLeft < - movementThreshold && movementMagnitudeRight < - movementThreshold)
             {
 				currentSpeed += acceleration * Time.deltaTime;
@@ -64,6 +66,7 @@ public class divingWithSwivelChair : MonoBehaviour
                 Vector3 movement = forwardDirection * currentSpeed * Time.deltaTime;
                 locomotion.transform.position += movement;
             }
+            // Abbremsen
 			else{
 				currentSpeed -= deceleration * Time.deltaTime;
 				currentSpeed = Mathf.Max(currentSpeed, 0f);
@@ -76,6 +79,7 @@ public class divingWithSwivelChair : MonoBehaviour
             lastRightConPos = currentRightConPos;
             Debug.Log(currentSpeed);
 
+            // Bei gewisser Geschwindigkeit Controller vibrieren lassen
             float bIntensity = (currentSpeed / maxSpeed) * 0.25f;
             if (bIntensity > 0.025f)
             {

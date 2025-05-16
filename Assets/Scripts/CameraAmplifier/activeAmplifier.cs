@@ -15,6 +15,7 @@ public class activeAmplifier : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // aktiviert bei Tastendruck den aktuellen RotationAmplifier, falls dieser schon aktiv ist setzt er diesen zurück und deaktiviert ihn
         if (rightConSec.action.WasPerformedThisFrame())
         {
             isActive = !isActive;

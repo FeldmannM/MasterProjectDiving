@@ -39,16 +39,18 @@ public class Vibration : MonoBehaviour
             started = false;
         }
     }
-
+    // Amplitude setzen
     public void setAmplitude(float a)
     {
         amplitude = a;
     }
+    // Beide Controller vibrieren lassen mit gegebener Amplitude
     public void startVib()
     {
         lCon.inputDevice.SendHapticImpulse(1, amplitude, 1.0f);
         rCon.inputDevice.SendHapticImpulse(1, amplitude, 1.0f);
     }
+    // Vibration stoppen
     public void stopVib()
     {
         lCon.inputDevice.StopHaptics();

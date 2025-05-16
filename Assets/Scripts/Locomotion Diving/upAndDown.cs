@@ -32,6 +32,7 @@ public class upAndDown : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        // Bei Tastendruck von Y Auftauchen
         if (leftS.action.IsPressed())
         {
             verticalSpeed += accV * Time.deltaTime;
@@ -40,6 +41,7 @@ public class upAndDown : MonoBehaviour
             Vector3 movement = Vector3.up * verticalSpeed * Time.deltaTime;
             locomotion.transform.position += movement;
         }
+        // Bei Tastendruck von X Abtauchen
         else if (leftP.action.IsPressed())
         {
             verticalSpeed -= accV * Time.deltaTime;
@@ -48,6 +50,7 @@ public class upAndDown : MonoBehaviour
             Vector3 movement = Vector3.up * verticalSpeed * Time.deltaTime;
             locomotion.transform.position += movement;
         }
+        // Abbremsen je nach aktueller Richtung
         else
         {
             if (verticalSpeed > 0)
@@ -69,6 +72,7 @@ public class upAndDown : MonoBehaviour
             }
         }
 
+        // Bei gewisser Geschwindigkeit Controller vibrieren lassen
         float bIntensity = Mathf.Abs((verticalSpeed / maxSpeed) * 0.25f);
         if (bIntensity > 0.025f)
         {

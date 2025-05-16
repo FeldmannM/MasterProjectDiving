@@ -200,8 +200,8 @@ public class divingMidDir : MonoBehaviour
 
             Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
             Debug.Log("MidDir: " + middleDirection);
-            
 
+            // Falls sich der Abstand beider Controller zum Nutzer verringert: Beschleunigungs-Phase
             if (leftDistRefPoint < lastLeftDistRefPoint - movementThreshold && rightDistRefPoint < lastRightDistRefPoint - movementThreshold)
             {
                 float effectiveSeparation = conSeparation - refPointPenalty;
@@ -225,6 +225,7 @@ public class divingMidDir : MonoBehaviour
                 locomotion.transform.position += movement;
                 sensor.currentLocomotionState = 2;
             }
+            // Falls sich der Abstand beider Controller zum Nutzer vergrößert: Vorbereitungs-Phase mit Abbremsen
             else if (leftDistRefPoint > lastLeftDistRefPoint + movementThreshold && rightDistRefPoint > lastRightDistRefPoint + movementThreshold)
             {
                 currentSpeed -= deceleration * Time.deltaTime;
@@ -239,6 +240,7 @@ public class divingMidDir : MonoBehaviour
                 leftDirList = new List<Vector3> { leftDirList[leftDirList.Count - 2], leftDirList[leftDirList.Count - 1] };
                 rightDirList = new List<Vector3> { rightDirList[rightDirList.Count - 2], rightDirList[rightDirList.Count - 1] };
             }
+            // Sonst: Abbremsen
             else
             {
                 currentSpeed -= deceleration * Time.deltaTime;
@@ -255,6 +257,7 @@ public class divingMidDir : MonoBehaviour
             lastRightDistRefPoint = rightDistRefPoint;
             //Debug.Log(currentSpeed);
 
+            // Bei gewisser Geschwindigkeit Controller vibrieren lassen
             float bIntensity = Mathf.Abs((currentSpeed / maxSpeed) * 0.25f);
             if (bIntensity > 0.025f)
             {
@@ -341,6 +344,7 @@ public class divingMidDir : MonoBehaviour
         return eigenvector;
     }
 
+    // Liste der letzten gespeicherten Positionen
     private void UpdateList(List<Vector3> posList, Vector3 pos, int posListLimit)
     {
         posList.Add(pos);
@@ -349,6 +353,7 @@ public class divingMidDir : MonoBehaviour
             posList.RemoveAt(0);
         }
     }
+    // Liste für den letzten Bewegungsraum
     private bool IsPosNearPosInList(List<Vector3> posList, Vector3 currentPos, float threshold)
     {
         foreach (Vector3 pos in posList)

@@ -60,11 +60,13 @@ public class divingAllDirections : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        // Idee Tauchen in alle Richtungen mit der Möglichkeit sich auf der Stelle zu drehen, basierend auf der Controller Position
         if (leftConPos != null && rightConPos != null)
         {
             currentLeftConPos = leftConPos.action.ReadValue<Vector3>();
             currentRightConPos = rightConPos.action.ReadValue<Vector3>();
 
+            // Nach Vorne beschleunigen
             if (currentLeftConPos.z < lastLeftConPos.z - movementThreshold && currentRightConPos.z < lastRightConPos.z - movementThreshold)
             {
                 currentSpeed += acceleration * Time.deltaTime;
@@ -74,6 +76,7 @@ public class divingAllDirections : MonoBehaviour
                 Vector3 movement = forwardDirection * currentSpeed * Time.deltaTime;
                 locomotion.transform.position += movement;
             }
+            // abbremsen
             else
             {
                 currentSpeed -= deceleration * Time.deltaTime;
@@ -84,7 +87,7 @@ public class divingAllDirections : MonoBehaviour
                 locomotion.transform.position += movement;
             }
 
-
+            // Vertikale Richtung beschleunigen Oben/Unten
             if (currentLeftConPos.y < lastLeftConPos.y - moveVThreshold && currentRightConPos.y < lastRightConPos.y - moveVThreshold)
             {
                 verticalSpeed += accV * Time.deltaTime;
@@ -101,6 +104,7 @@ public class divingAllDirections : MonoBehaviour
                 Vector3 movement = Vector3.up * verticalSpeed * Time.deltaTime;
                 locomotion.transform.position += movement;
             }
+            // abbremsen je nach Richtung
             else
             {
                 if(verticalSpeed > 0)
@@ -122,7 +126,7 @@ public class divingAllDirections : MonoBehaviour
                 }
             }
 
-
+            // Drehung
             if (currentLeftConPos.x < lastLeftConPos.x - turnThreshold && currentRightConPos.x < lastRightConPos.x - turnThreshold)
             {
                 turnSpeed += turnFactorAc * Time.deltaTime;
@@ -135,6 +139,7 @@ public class divingAllDirections : MonoBehaviour
                 locomotion.transform.Rotate(Vector3.up, turnSpeed * Time.deltaTime);
                 //locomotion.transform.Rotate(mainCamera.transform.up, turnSpeed * Time.deltaTime);
             }
+            // abbremsen je nach Drehrichtung
             else
             {
                 if (turnSpeed > 0)
@@ -156,6 +161,7 @@ public class divingAllDirections : MonoBehaviour
             lastRightConPos = currentRightConPos;
             Debug.Log(currentSpeed + ", " + verticalSpeed + ", " + turnSpeed);
 
+            // Bei gewisser Geschwindigkeit Controller vibrieren lassen
             float bIntensity = 0;
             if (currentSpeed > 0)
             {

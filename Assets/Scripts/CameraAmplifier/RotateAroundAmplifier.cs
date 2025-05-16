@@ -25,12 +25,14 @@ public class RotateAroundAmplifier : MonoBehaviour
         Vector3 anchorPos = rotationAnchor.transform.position;
         Quaternion currentCamRot = mainCamera.transform.localRotation;
         Quaternion amplifiedRot = QuaternionMult(currentCamRot, rotAmplifier - 1);
+        // Headset und Controller entsprechend rotieren
         rotateObjectAroundObject(mainCamera.gameObject, anchorPos, amplifiedRot);
         rotateObjectAroundObject(leftController, anchorPos, amplifiedRot);
         rotateObjectAroundObject(lCon, anchorPos, amplifiedRot);
         rotateObjectAroundObject(rightController, anchorPos, amplifiedRot);
         rotateObjectAroundObject(rCon, anchorPos, amplifiedRot);
     }
+    // Rotation um alle Achsen mit RotateAround damit kein Gimbal Lock entsteht 
     void rotateObjectAroundObject(GameObject go, Vector3 anchor, Quaternion angle)
     {
         go.transform.RotateAround(anchor, Vector3.right, angle.eulerAngles.x);
