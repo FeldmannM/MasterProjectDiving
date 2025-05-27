@@ -175,7 +175,7 @@ MonoBehaviour:
   m_AttachEaseInTime: 0.15
   m_MovementType: 0
   m_VelocityDamping: 0
-  m_VelocityScale: 0.1
+  m_VelocityScale: 0.5
   m_AngularVelocityDamping: 0
   m_AngularVelocityScale: 1
   m_TrackPosition: 1
@@ -229,10 +229,10 @@ HingeJoint:
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_UseSpring: 0
+  m_UseSpring: 1
   m_Spring:
     spring: 0
-    damper: 0
+    damper: 10
     targetPosition: 0
   m_UseMotor: 0
   m_Motor:
@@ -451,7 +451,7 @@ MonoBehaviour:
   m_AttachEaseInTime: 0.15
   m_MovementType: 0
   m_VelocityDamping: 0
-  m_VelocityScale: 0.1
+  m_VelocityScale: 0.5
   m_AngularVelocityDamping: 0
   m_AngularVelocityScale: 1
   m_TrackPosition: 1
@@ -505,10 +505,10 @@ HingeJoint:
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_UseSpring: 0
+  m_UseSpring: 1
   m_Spring:
     spring: 0
-    damper: 0
+    damper: 10
     targetPosition: 0
   m_UseMotor: 0
   m_Motor:
@@ -2767,7 +2767,7 @@ MonoBehaviour:
   m_AttachEaseInTime: 0.15
   m_MovementType: 0
   m_VelocityDamping: 0
-  m_VelocityScale: 0.1
+  m_VelocityScale: 0.5
   m_AngularVelocityDamping: 0
   m_AngularVelocityScale: 1
   m_TrackPosition: 1
@@ -2821,10 +2821,10 @@ HingeJoint:
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_UseSpring: 0
+  m_UseSpring: 1
   m_Spring:
     spring: 0
-    damper: 0
+    damper: 10
     targetPosition: 0
   m_UseMotor: 0
   m_Motor:
