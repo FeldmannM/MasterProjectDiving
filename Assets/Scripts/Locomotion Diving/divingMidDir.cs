@@ -114,12 +114,7 @@ public class divingMidDir : MonoBehaviour
             Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
             */
 
-            /* erste Idee
-            Vector3 middleDirection = (lCon.transform.forward + rCon.transform.forward);
-            //middleDirection.y = 0f;
-            middleDirection = middleDirection.normalized;
-            Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
-            */
+            /* alte Idee mit Kurvenapproximation
             if(currentLeftConLocalPos.magnitude > 0.00001f && currentRightConLocalPos.magnitude > 0.00001f)
             {
                 UpdateList(leftDirList, currentLeftConLocalPos, 144);
@@ -200,6 +195,41 @@ public class divingMidDir : MonoBehaviour
 
             Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
             Debug.Log("MidDir: " + middleDirection);
+            */
+
+            if (currentLeftConLocalPos.magnitude > 0.00001f && currentRightConLocalPos.magnitude > 0.00001f)
+            {
+                UpdateList(leftDirList, currentLeftConLocalPos, 20);
+                UpdateList(rightDirList, currentRightConLocalPos, 20);
+            }
+            Vector3 middleDirection = Vector3.forward;
+            if (leftDirList.Count > 1 && rightDirList.Count > 1)
+            {
+                Vector3 diffLeft = (currentLeftConLocalPos - leftDirList[0]) * 10;
+                Vector3 diffRight = (currentRightConLocalPos - rightDirList[0]) * 10;
+                float magnitudeLeft = diffLeft.magnitude;
+                float magnitudeRight = diffRight.magnitude;
+                Debug.DrawRay(currentLeftConPos, diffLeft * 2, Color.red, 0.1f);
+                Debug.DrawRay(currentRightConPos, diffRight * 2, Color.red, 0.1f);
+                float weightLeft = magnitudeLeft / (magnitudeLeft + magnitudeRight);
+                float weightRight = magnitudeRight / (magnitudeLeft + magnitudeRight);
+                middleDirection = (diffLeft * weightLeft + diffRight * weightRight);
+                middleDirection.y *= -1;
+            }
+            if (Vector3.Dot(middleDirection, neckAnchor.transform.forward) < 0)
+            {
+                middleDirection.x *= -1;
+                middleDirection.z *= -1;
+                //middleDirection *= -1;
+            }
+            if (oldMidDir != null)
+            {
+                middleDirection = Vector3.Lerp(oldMidDir, middleDirection, 4 * Time.deltaTime).normalized;
+            }
+            oldMidDir = middleDirection;
+            Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
+            Debug.Log("MidDir: " + middleDirection);
+
 
             // Falls sich der Abstand beider Controller zum Nutzer verringert: Beschleunigungs-Phase
             if (leftDistRefPoint < lastLeftDistRefPoint - movementThreshold && rightDistRefPoint < lastRightDistRefPoint - movementThreshold)
