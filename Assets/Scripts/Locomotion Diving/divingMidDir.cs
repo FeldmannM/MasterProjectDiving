@@ -197,6 +197,7 @@ public class divingMidDir : MonoBehaviour
             Debug.Log("MidDir: " + middleDirection);
             */
 
+            /* ehemals neuer Versuch
             if (currentLeftConLocalPos.magnitude > 0.00001f && currentRightConLocalPos.magnitude > 0.00001f)
             {
                 UpdateList(leftDirList, currentLeftConLocalPos, 20);
@@ -221,6 +222,44 @@ public class divingMidDir : MonoBehaviour
                 middleDirection.x *= -1;
                 middleDirection.z *= -1;
                 //middleDirection *= -1;
+            }
+            if (oldMidDir != null)
+            {
+                middleDirection = Vector3.Lerp(oldMidDir, middleDirection, 4 * Time.deltaTime).normalized;
+            }
+            oldMidDir = middleDirection;
+            Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
+            Debug.Log("MidDir: " + middleDirection);
+            */
+
+            if (currentLeftConLocalPos.magnitude > 0.00001f && currentRightConLocalPos.magnitude > 0.00001f)
+            {
+                UpdateList(leftDirList, currentLeftConLocalPos, 2);
+                UpdateList(rightDirList, currentRightConLocalPos, 2);
+            }
+            Vector3 middleDirection = Vector3.forward;
+            if (leftDirList.Count > 1 && rightDirList.Count > 1)
+            {
+                Vector3 diffLeft = (currentLeftConLocalPos - leftDirList[0]) * 40;
+                Vector3 diffRight = (currentRightConLocalPos - rightDirList[0]) * 40;
+                float magnitudeLeft = diffLeft.magnitude;
+                float magnitudeRight = diffRight.magnitude;
+                float totalMagnitude = magnitudeLeft + magnitudeRight;
+                Debug.DrawRay(currentLeftConPos, diffLeft * 2, Color.red, 0.1f);
+                Debug.DrawRay(currentRightConPos, diffRight * 2, Color.red, 0.1f);
+                if(totalMagnitude > 0)
+                {
+                    middleDirection = (diffLeft * (magnitudeLeft / totalMagnitude)) + (diffRight * (magnitudeRight / totalMagnitude));
+                    middleDirection.y *= -1;
+                }
+                // Ebene wäre:
+                Vector3 movementPlane = Vector3.Cross(diffLeft, diffRight);
+            }
+            // Problem: Wann Flippen und wann nicht
+            if (Vector3.Dot(middleDirection, neckAnchor.transform.forward) < 0)
+            {
+                middleDirection.x *= -1;
+                middleDirection.z *= -1;
             }
             if (oldMidDir != null)
             {
