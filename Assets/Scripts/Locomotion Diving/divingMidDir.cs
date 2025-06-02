@@ -232,16 +232,28 @@ public class divingMidDir : MonoBehaviour
             Debug.Log("MidDir: " + middleDirection);
             */
 
+
+            // Snap Turn Drehung
+            Quaternion turnRot = Quaternion.Euler(0, xrOrigin.transform.localEulerAngles.y, 0);
+            if (turnManipulator.transform.localEulerAngles.z != 0)
+            {
+                turnRot = Quaternion.Euler(0, 0, turnManipulator.transform.localEulerAngles.z);
+            }
+            // Sitzend/Liegend
+            turnRot = locomotion.transform.localRotation * turnRot * RotationAmplifier.transform.localRotation;
+            Debug.DrawRay(locomotion.transform.position, turnRot * Vector3.up, Color.yellow, 0.2f);
+
+            // Muss noch angepasst werden, dass es nur bei State 2 Bewegung trackt, da der gefühlt beim Gleiten in eine merkwürdige Richtung geht
             if (currentLeftConLocalPos.magnitude > 0.00001f && currentRightConLocalPos.magnitude > 0.00001f)
             {
-                UpdateList(leftDirList, currentLeftConLocalPos, 2);
-                UpdateList(rightDirList, currentRightConLocalPos, 2);
+                UpdateList(leftDirList, currentLeftConLocalPos, 40);
+                UpdateList(rightDirList, currentRightConLocalPos, 40);
             }
             Vector3 middleDirection = Vector3.forward;
             if (leftDirList.Count > 1 && rightDirList.Count > 1)
             {
-                Vector3 diffLeft = (currentLeftConLocalPos - leftDirList[0]) * 40;
-                Vector3 diffRight = (currentRightConLocalPos - rightDirList[0]) * 40;
+                Vector3 diffLeft = (currentLeftConLocalPos - leftDirList[0]) * 2;
+                Vector3 diffRight = (currentRightConLocalPos - rightDirList[0]) * 2;
                 float magnitudeLeft = diffLeft.magnitude;
                 float magnitudeRight = diffRight.magnitude;
                 float totalMagnitude = magnitudeLeft + magnitudeRight;
@@ -251,19 +263,26 @@ public class divingMidDir : MonoBehaviour
                 {
                     middleDirection = (diffLeft * (magnitudeLeft / totalMagnitude)) + (diffRight * (magnitudeRight / totalMagnitude));
                     middleDirection.y *= -1;
+                    middleDirection.z *= -1;
+                    middleDirection.x *= -1;
                 }
                 // Ebene wäre:
                 Vector3 movementPlane = Vector3.Cross(diffLeft, diffRight);
             }
-            // Problem: Wann Flippen und wann nicht
+
+            middleDirection = turnRot * middleDirection;
+
+            /* Geht in Camera-Richtung ist nicht das was ich haben möchte
             if (Vector3.Dot(middleDirection, neckAnchor.transform.forward) < 0)
             {
                 middleDirection.x *= -1;
                 middleDirection.z *= -1;
-            }
+            }*/
             if (oldMidDir != null)
             {
-                middleDirection = Vector3.Lerp(oldMidDir, middleDirection, 4 * Time.deltaTime).normalized;
+                middleDirection = Vector3.Lerp(oldMidDir, middleDirection, 16f * Time.deltaTime).normalized;
+                // aktuelle Notlösung damit man nicht nach hinten geht
+                middleDirection.z = Mathf.Max(0, middleDirection.z);
             }
             oldMidDir = middleDirection;
             Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
