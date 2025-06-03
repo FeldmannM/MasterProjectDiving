@@ -68,6 +68,7 @@ public class divingMidDir : MonoBehaviour
     [SerializeField]
     private List<Vector3> rightDirList = new List<Vector3>();
     private Vector3 oldMidDir;
+    private Vector3 lastUsedMidDir;
 
     private useSensor sensor;
 
@@ -282,7 +283,7 @@ public class divingMidDir : MonoBehaviour
             {
                 middleDirection = Vector3.Lerp(oldMidDir, middleDirection, 16f * Time.deltaTime).normalized;
                 // aktuelle Notlösung damit man nicht nach hinten geht
-                middleDirection.z = Mathf.Max(0, middleDirection.z);
+                //middleDirection.z = Mathf.Max(0, middleDirection.z);
             }
             oldMidDir = middleDirection;
             Debug.DrawRay(locomotion.transform.position, middleDirection * 2, Color.blue, 0.1f);
@@ -312,10 +313,14 @@ public class divingMidDir : MonoBehaviour
                 Vector3 movement = middleDirection * currentSpeed * Time.deltaTime;
                 locomotion.transform.position += movement;
                 sensor.currentLocomotionState = 2;
+
+                lastUsedMidDir = middleDirection;
             }
             // Falls sich der Abstand beider Controller zum Nutzer vergrößert: Vorbereitungs-Phase mit Abbremsen
             else if (leftDistRefPoint > lastLeftDistRefPoint + movementThreshold && rightDistRefPoint > lastRightDistRefPoint + movementThreshold)
             {
+                middleDirection = lastUsedMidDir;
+
                 currentSpeed -= deceleration * Time.deltaTime;
                 currentSpeed = Mathf.Max(currentSpeed, 0f);
 
@@ -331,6 +336,8 @@ public class divingMidDir : MonoBehaviour
             // Sonst: Abbremsen
             else
             {
+                middleDirection = lastUsedMidDir;
+
                 currentSpeed -= deceleration * Time.deltaTime;
                 currentSpeed = Mathf.Max(currentSpeed, 0f);
 
