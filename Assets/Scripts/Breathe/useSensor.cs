@@ -8,6 +8,8 @@ public class useSensor : MonoBehaviour
     [SerializeField]
     private GameObject sensorPlotGO;
     [SerializeField]
+    private float dynamicArmMovementCompensator = 0.2f;
+    [SerializeField]
     private float stagnationThreshold = 0.001f;
     [SerializeField]
     private float filterThreshold = 0.005f;
@@ -26,6 +28,14 @@ public class useSensor : MonoBehaviour
     private int maxCount = 20;
     [SerializeField]
     private List<float> lastValues = new List<float>();
+    [SerializeField]
+    private List<float> mountains = new List<float>();
+    [SerializeField]
+    private float maxMountain = float.MinValue;
+    [SerializeField]
+    private List<float> valleys = new List<float>();
+    [SerializeField]
+    private float minValley = float.MaxValue;
 
     public int currentLocomotionState = 0;
 
@@ -42,12 +52,12 @@ public class useSensor : MonoBehaviour
         // Wert sinkt normalerweise beim Erhöhen der Distanz zu einem
         if(currentLocomotionState == 1)
         {
-            sensorValue += 0.2f;
+            sensorValue += dynamicArmMovementCompensator;
         }
-        // Wert steigt normalerweise liecht beim Verringern der Distanz zu einem
+        // Wert steigt normalerweise leicht beim Verringern der Distanz zu einem
         else if (currentLocomotionState == 2)
         {
-            sensorValue -= 0.02f;
+            sensorValue -= dynamicArmMovementCompensator * 0.1f;
         }
 
         // Bewegungsfilter anwenden
@@ -63,6 +73,16 @@ public class useSensor : MonoBehaviour
             sensorPlotGO.GetComponent<sensorPlot>().setSensorValue(sensorValue);
         }
 
+        // höchster Gesamtwert
+        if(sensorValue > maxMountain)
+        {
+            maxMountain = sensorValue;
+        }
+        // niedrigster Gesamtwert
+        if(sensorValue < minValley && Time.realtimeSinceStartup >= 20f)
+        {
+            minValley = sensorValue;
+        }
 
         // Liste der letzten paar Werte
         lastValues.Add(sensorValue);
@@ -131,6 +151,17 @@ public class useSensor : MonoBehaviour
             Debug.Log("Variable steigt wieder an. Überwachung wird zurückgesetzt.");
             ResetMonitoring();
             wasInc = true;
+
+            // Tal speichern
+            float minV = float.MaxValue;
+            foreach (float v in lastValues)
+            {
+                if (v < minV)
+                {
+                    minV = v;
+                }
+            }
+            valleys.Add(minV);
         }
     }
 
@@ -143,6 +174,17 @@ public class useSensor : MonoBehaviour
             wasInc = false;
             isMonitoringDecrease = true;
             Debug.Log("Übergang erkannt. Variable beginnt zu fallen.");
+
+            // Berg speichern
+            float maxV = float.MinValue;
+            foreach (float v in lastValues)
+            {
+                if(v > maxV)
+                {
+                    maxV = v;
+                }
+            }
+            mountains.Add(maxV);
         }
 
         if (isMonitoringDecrease)

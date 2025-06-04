@@ -880,7 +880,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &200209870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2911,12 +2911,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensorValue: 0
   sensorPlotGO: {fileID: 200209869}
+  dynamicArmMovementCompensator: 0.2
   stagnationThreshold: 0.001
   filterThreshold: 0.005
   filterValue: 0.75
   percentThreshold: 0.8
   maxCount: 20
   lastValues: []
+  mountains: []
+  maxMountain: 0
+  valleys: []
+  minValley: 3.4028235e+38
   currentLocomotionState: 0
 --- !u!1001 &797620727
 PrefabInstance:
