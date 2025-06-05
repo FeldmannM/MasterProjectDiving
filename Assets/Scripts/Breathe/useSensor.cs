@@ -30,12 +30,15 @@ public class useSensor : MonoBehaviour
     private List<float> lastValues = new List<float>();
     [SerializeField]
     private List<float> mountains = new List<float>();
-    [SerializeField]
     private float maxMountain = float.MinValue;
     [SerializeField]
-    private List<float> valleys = new List<float>();
+    private List<float> mountainTimings = new List<float>();
+    private float lastMountainTiming = -1f;
     [SerializeField]
+    private List<float> valleys = new List<float>();
     private float minValley = float.MaxValue;
+    private bool startBreathing = false;
+    private float lastBreathingTime = -1f;
 
     public int currentLocomotionState = 0;
 
@@ -152,16 +155,19 @@ public class useSensor : MonoBehaviour
             ResetMonitoring();
             wasInc = true;
 
-            // Tal speichern
-            float minV = float.MaxValue;
-            foreach (float v in lastValues)
+            // Täler speichern in den ersten 2 Minuten
+            if (Time.realtimeSinceStartup < 120f)
             {
-                if (v < minV)
+                float minV = float.MaxValue;
+                foreach (float v in lastValues)
                 {
-                    minV = v;
+                    if (v < minV)
+                    {
+                        minV = v;
+                    }
                 }
+                valleys.Add(minV);
             }
-            valleys.Add(minV);
         }
     }
 
@@ -175,16 +181,24 @@ public class useSensor : MonoBehaviour
             isMonitoringDecrease = true;
             Debug.Log("Übergang erkannt. Variable beginnt zu fallen.");
 
-            // Berg speichern
-            float maxV = float.MinValue;
-            foreach (float v in lastValues)
+            // Berge speichern in den ersten 2 Minuten
+            if(Time.realtimeSinceStartup < 120f)
             {
-                if(v > maxV)
+                float maxV = float.MinValue;
+                foreach (float v in lastValues)
                 {
-                    maxV = v;
+                    if (v > maxV)
+                    {
+                        maxV = v;
+                    }
                 }
+                mountains.Add(maxV);
+                if (lastMountainTiming > 0)
+                {
+                    mountainTimings.Add(Time.time - lastMountainTiming);
+                }
+                lastMountainTiming = Time.time;
             }
-            mountains.Add(maxV);
         }
 
         if (isMonitoringDecrease)
@@ -193,7 +207,52 @@ public class useSensor : MonoBehaviour
             Debug.Log("Variable fällt weiter.");
             // weitergeben an die Partikelmechanik
             float deltaValue = lastValues[lastValues.Count - 1] - lastValues[0];
-            transform.GetComponent<sensorParticles>().sValue = -deltaValue * 10;
+            if(Time.realtimeSinceStartup < 120f || startBreathing)
+            {
+                transform.GetComponent<sensorParticles>().sValue = -deltaValue * 10;
+            }
+            else
+            {
+                // Ähnlichkeit prüfen zu den in den ersten 2 Minuten gemessenen Werten
+                // Höhe des Werts
+                float minMountain = Mathf.Min(mountains.ToArray());
+                float maxMountain = Mathf.Max(mountains.ToArray());
+                bool similarValue = sensorValue >= minMountain - 0.1f && sensorValue <= maxMountain + 0.1f;
+                // Zeitabstand zur letzten Ausatmung
+                int index = mountainTimings.Count / 2;
+                float medianTime;
+                if(mountainTimings.Count % 2 == 0)
+                {
+                    medianTime = (mountainTimings[index - 1] + mountainTimings[index]) / 2f;
+                }
+                else
+                {
+                    medianTime = mountainTimings[index];
+                }
+                bool similarTime;
+                if (lastBreathingTime <= 0f)
+                {
+                    similarTime = true;
+                }
+                else
+                {
+                    if (lastBreathingTime >= medianTime - 0.5f)
+                    {
+                        similarTime = true;
+                    }
+                    else
+                    {
+                        similarTime = false;
+                    }
+                }
+                // Falls beides erfüllt dann Start der Ausatmungsblassen
+                if (similarValue && similarTime)
+                {
+                    transform.GetComponent<sensorParticles>().sValue = -deltaValue * 10;
+                    startBreathing = true;
+                    lastBreathingTime = Time.time;
+                }
+            }
 
             // Überprüfung auf Stagnation
             if (Mathf.Abs(deltaValue/Time.deltaTime) < stagnationThreshold)
@@ -224,6 +283,7 @@ public class useSensor : MonoBehaviour
     {
         wasInc = false;
         isMonitoringDecrease = false;
+        startBreathing = false;
     }
 
     // dynamischer Filter um Schwankungen auszugleichen

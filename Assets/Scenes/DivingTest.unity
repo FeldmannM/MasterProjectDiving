@@ -880,7 +880,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &200209870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2919,9 +2919,8 @@ MonoBehaviour:
   maxCount: 20
   lastValues: []
   mountains: []
-  maxMountain: 0
+  mountainTimings: []
   valleys: []
-  minValley: 3.4028235e+38
   currentLocomotionState: 0
 --- !u!1001 &797620727
 PrefabInstance:

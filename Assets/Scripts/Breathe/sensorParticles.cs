@@ -29,7 +29,7 @@ public class sensorParticles : MonoBehaviour
         factor = sValue * 40;
         factor = Mathf.Clamp(factor, 0.01f, 40);
         //Debug.Log("Breathe Factor: " + factor);
-        emission.rateOverTime = factor;
+        emission.rateOverTime = factor/5f;
 
         // Bei einigen Luftblassen Sound abspielen
         if (factor > 5 && !audioS.isPlaying)
