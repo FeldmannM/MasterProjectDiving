@@ -118,7 +118,7 @@ public class Lever : MonoBehaviour
         }
     }
 
-    // Falls ein Mode mit Flossen aktiviert und das Menü geschlossen wurde Flossen anzeigen anstelle der Hände
+    // Falls ein Mode mit Flossen aktiviert und das Menü geschlossen wurde Flossen anzeigen anstelle der Hände, ansonsten die Hände passend drehen
     public void setMenuStatus(bool activeStatus)
     {
         if (!activeStatus)
@@ -129,6 +129,11 @@ public class Lever : MonoBehaviour
                 HandR.SetActive(false);
                 DivingFinL.SetActive(true);
                 DivingFinR.SetActive(true);
+            }
+            else
+            {
+                HandL.transform.localRotation = Quaternion.Euler(new Vector3(-180, 270, -90));
+                HandR.transform.localRotation = Quaternion.Euler(new Vector3(-180, 270, -90));
             }
         }
     }

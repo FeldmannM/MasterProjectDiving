@@ -90,7 +90,9 @@ public class activateMenu : MonoBehaviour
         }
         // Hände immer anzeigen im Menü  
         HandL.SetActive(true);
+        HandL.transform.localRotation = Quaternion.Euler(new Vector3(0, 270, -90));
         HandR.SetActive(true);
+        HandR.transform.localRotation = Quaternion.Euler(new Vector3(0, 270, -90));
         DivingFinL.SetActive(false);
         DivingFinR.SetActive(false);
     }
