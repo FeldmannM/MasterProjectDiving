@@ -29,3 +29,4 @@ Sound during the game:
 
 Other resources:
     - TextMeshPro
+    - Animation Rigging
