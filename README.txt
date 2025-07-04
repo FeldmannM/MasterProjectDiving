@@ -25,7 +25,9 @@ Virtual reality and 3D interactions:
 
 Sound during the game:
     - Ambience: https://freesound.org/people/Xemptful/sounds/406623/
-    - Bubbles : https://freesound.org/people/ristooooo1/sounds/539819/?page=2#comments
+    - Bubbles : https://freesound.org/people/ristooooo1/sounds/539819/
+    - Goals   : https://freesound.org/people/ajanhallinta/sounds/650943/
+    - Finish  : https://freesound.org/people/FunWithSound/sounds/456966/
 
 Other resources:
     - TextMeshPro
