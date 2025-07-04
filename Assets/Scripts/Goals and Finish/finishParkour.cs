@@ -9,8 +9,11 @@ public class finishParkour : MonoBehaviour
     [SerializeField]
     private GameObject locomotion;
     [SerializeField]
+    private AudioSource audioS;
+    [SerializeField]
     private int passedGoals = 0;
     private int childCount = 0;
+    private bool end = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,11 +25,13 @@ public class finishParkour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Alle Tore durchtaucht
-        if(passedGoals == childCount)
+        // Alle Tore durchtaucht und damit Ende abspielen
+        if(passedGoals == childCount && !end)
         {
             finish.SetActive(true);
             finish.transform.position = locomotion.transform.position;
+            audioS.Play();
+            end = true;
         }
     }
     // wenn ein Tor durchquert Zähler erhöhen

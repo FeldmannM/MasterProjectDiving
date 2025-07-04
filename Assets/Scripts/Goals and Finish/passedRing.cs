@@ -6,6 +6,8 @@ public class passedRing : MonoBehaviour
 {
     [SerializeField]
     private GameObject ring;
+    [SerializeField]
+    private AudioSource audioS;
     private Color colorGreen = Color.green;
 
     // Ring durchquert
@@ -15,7 +17,7 @@ public class passedRing : MonoBehaviour
         {
             ChangeColor();
         }
-        Debug.Log("Hit");
+        //Debug.Log("Hit");
     }
 
 
@@ -32,6 +34,7 @@ public class passedRing : MonoBehaviour
                 if(i == 0)
                 {
                     GameObject.Find("Goals").GetComponent<finishParkour>().addGoal();
+                    audioS.Play();
                 }
             }
         }

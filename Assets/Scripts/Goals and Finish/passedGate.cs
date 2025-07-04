@@ -6,6 +6,8 @@ public class passedGate : MonoBehaviour
 {
     [SerializeField]
     private GameObject gate;
+    [SerializeField]
+    private AudioSource audioS;
     private Color colorGreen = Color.green;
 
     // Tor durchquert
@@ -15,7 +17,7 @@ public class passedGate : MonoBehaviour
         {
             ChangeColor();
         }
-        Debug.Log("Hit");
+        //Debug.Log("Hit");
     }
 
     // Farbe des Tors auf Grün ändern beim Durchqueren
@@ -24,7 +26,14 @@ public class passedGate : MonoBehaviour
         for(int i = 0; i < 4; i++)
         {
             Renderer renderer = gate.transform.GetChild(i).GetComponent<Renderer>();
-            renderer.material.color = colorGreen;
+            if (!renderer.material.color.Equals(colorGreen))
+            {
+                renderer.material.color = colorGreen;
+                if (i == 0)
+                {
+                    audioS.Play();
+                }
+            }
         }
     }
 
