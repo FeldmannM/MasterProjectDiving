@@ -303,6 +303,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1696501080}
     - target: {fileID: 4618595074593675639, guid: 4a2083638327c6e4083e4767a9e40cf3, type: 3}
+      propertyPath: rotObject
+      value: 
+      objectReference: {fileID: 7696548425598651978}
+    - target: {fileID: 4618595074593675639, guid: 4a2083638327c6e4083e4767a9e40cf3, type: 3}
       propertyPath: rigBuilder
       value: 
       objectReference: {fileID: 88392200}
@@ -1157,6 +1161,10 @@ PrefabInstance:
       propertyPath: m_Data.m_Source
       value: 
       objectReference: {fileID: 1495634060}
+    - target: {fileID: 4618595074593675639, guid: 4a2083638327c6e4083e4767a9e40cf3, type: 3}
+      propertyPath: rotObject
+      value: 
+      objectReference: {fileID: 7696548425598651978}
     - target: {fileID: 8351376865596327192, guid: 4a2083638327c6e4083e4767a9e40cf3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
